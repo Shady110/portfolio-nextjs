@@ -103,6 +103,44 @@
     padding-bottom: 5rem;
   }
 
+  /* ── Flip Card 3D ── */
+
+  /*
+    Perspective lives on the outer shell so sibling cards don't
+    share the same perspective context and distort each other.
+  */
+  .flip-card {
+    perspective: 1100px;
+  }
+  .flip-card-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  /* Desktop pointer devices: CSS hover handles the flip with zero JS */
+  @media (hover: hover) and (pointer: fine) {
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+  }
+  /* Touch / click: JS toggles .is-flipped */
+  .flip-card-inner.is-flipped {
+    transform: rotateY(180deg);
+  }
+  /* Each face: hide its reverse side while the other is showing */
+  .flip-face {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  /* Back face sits pre-rotated so it appears correct after the parent flips */
+  .flip-face-back {
+    transform: rotateY(180deg);
+  }
+  /* Reduced-motion card: cross-fade instead of rotate */
+  .flip-fade-face {
+    transition: opacity 0.35s ease;
+  }
+
   /* ── Logo card entrance ── */
   @keyframes logoFadeUp {
     from { opacity: 0; transform: translateY(10px); }
@@ -138,6 +176,11 @@
   .logo-card-animate {
     opacity: 1;
     animation: none;
+  }
+
+  /* Disable 3D flip — cross-fade fallback handled in JS via useReducedMotion */
+  .flip-card-inner {
+    transition: none;
   }
 
   /* Prevent layout-shift "bounce" on card hovers */
