@@ -384,29 +384,39 @@ const ProjectFlipCard = memo(function ProjectFlipCard({
   const shouldReduce = useReducedMotion();
 
   /*
-    ref to the inner 3D element so we can imperatively add .peek-done.
-    All hooks must be declared before any early return (Rules of Hooks).
-    When shouldReduce is true, this ref stays null — the guard in useEffect
-    handles it cleanly.
+    ── Why React state, not classList.add ──────────────────────────────────────
+
+    The previous implementation called `innerRef.current?.classList.add('peek-done')`
+    inside toggle() and inside animationend listeners. This is incorrect because
+    React controls the DOM node's `className` attribute entirely via the JSX
+    `className` prop. Every time setIsFlipped() triggers a re-render, React calls
+    `element.className = "<string from JSX>"` — which OVERWRITES any classes that
+    were imperatively added, removing peek-done immediately.
+
+    Fix: track peekDone in React state so it is always included in the className
+    string that React writes to the DOM. React is then the single source of truth
+    for all class mutations and will never clobber peek-done on re-render.
+  */
+  const [peekDone, setPeekDone] = useState(false);
+
+  /*
+    We still need a ref to attach the animationend / animationcancel listeners.
+    The ref does NOT mutate classList — it only reads the element for addEventListener.
+    All hooks are declared before any early return (Rules of Hooks).
   */
   const innerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = innerRef.current;
-    if (!el) return;
+    if (!el) return; // null when shouldReduce is true (ReducedMotionCard rendered instead)
 
     /*
-      Mark peek as permanently done after the animation completes or is
-      cancelled. Both events fire in all modern browsers:
-        animationend    — animation ran to completion naturally
-        animationcancel — animation stopped mid-way (e.g. element hidden,
-                          display changed, or browser decided not to run it)
-
-      Once .peek-done is on the element the CSS selector
-      :not(.peek-done) no longer matches, so the animation can never
-      restart — even if .is-flipped is removed and the card flips back.
+      Listen for peek animation lifecycle events and lift the result into
+      React state. Both events are covered:
+        animationend    — peek ran to full completion
+        animationcancel — peek stopped mid-way (element hidden, CSS changed, etc.)
     */
-    const markDone = () => el.classList.add('peek-done');
+    const markDone = () => setPeekDone(true);
 
     el.addEventListener('animationend',    markDone, { once: true });
     el.addEventListener('animationcancel', markDone, { once: true });
@@ -418,39 +428,39 @@ const ProjectFlipCard = memo(function ProjectFlipCard({
   }, []);
 
   // Reduced-motion users get a cross-fade instead of 3D rotation.
-  // The peek animation is also suppressed via CSS `animation: none` in the
-  // prefers-reduced-motion media query block in globals.css.
   if (shouldReduce) {
     return <ReducedMotionCard project={project} />;
   }
 
   /*
-    --peek-delay: stagger the cardPeek animation so cards lift one after
-    another (cascade) rather than all at once. Base delay is 0.9s (after
-    the entrance fade-in completes), each subsequent card adds 0.13s.
-
-    Card 0 → 0.90s   Card 1 → 1.03s
-    Card 2 → 1.16s   Card 3 → 1.29s
+    Stagger delays so cards peek one after another (cascade effect).
+      Card 0 → 0.90s   Card 1 → 1.03s
+      Card 2 → 1.16s   Card 3 → 1.29s
   */
   const peekDelay = `${0.9 + index * 0.13}s`;
 
   /*
-    On every tap, immediately add .peek-done before updating state.
-    This covers the case where the user taps during the peek animation —
-    the CSS animation selector breaks right away (via :not(.peek-done)),
-    so the animation stops cleanly before the flip transition fires.
-    Adding the class is idempotent so subsequent taps are harmless.
+    setPeekDone(true) on every tap:
+      • If the user taps BEFORE the peek fires → peek-done enters the className
+        in the same React render as is-flipped, so the animation never starts.
+      • If the user taps DURING the peek → peek-done enters className; the CSS
+        selector :not(.peek-done) immediately stops matching; animation stops;
+        flip transition takes over cleanly.
+      • If the user taps AFTER the peek → peek-done is already true (from
+        animationend); setPeekDone(true) is a no-op.
+    In all cases the flip transition (CSS transition: transform on .flip-card-inner)
+    fires correctly because React is always the one writing the className.
   */
   const toggle = () => {
-    innerRef.current?.classList.add('peek-done');
+    setPeekDone(true);
     setIsFlipped((v) => !v);
   };
 
   return (
     /*
-      Outer shell: owns the perspective context + click/keyboard handler.
-      CSS (hover: hover) rule handles desktop flip — zero JS.
-      .is-flipped class + transition handles touch/click flip.
+      Outer shell: perspective context + all event handlers.
+      Desktop flip: CSS (hover: hover) media query — zero JS, zero re-renders.
+      Mobile/tablet flip: .is-flipped class via React state + CSS transition.
     */
     <div
       className="flip-card group h-[500px] cursor-pointer rounded-2xl
@@ -474,9 +484,11 @@ const ProjectFlipCard = memo(function ProjectFlipCard({
     >
       <div
         ref={innerRef}
-        className={`flip-card-inner relative w-full h-full${
-          isFlipped ? ' is-flipped' : ''
-        }`}
+        className={[
+          'flip-card-inner relative w-full h-full',
+          isFlipped  ? 'is-flipped'  : '',
+          peekDone   ? 'peek-done'   : '',
+        ].filter(Boolean).join(' ')}
         style={{ '--peek-delay': peekDelay } as React.CSSProperties}
       >
         {/* ── Front ── */}
