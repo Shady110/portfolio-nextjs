@@ -122,7 +122,7 @@ export default function Hero() {
                   </svg>
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/shady--gamal"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"

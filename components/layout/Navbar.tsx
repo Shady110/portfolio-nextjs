@@ -40,12 +40,9 @@ export default function Navbar() {
       <div className="max-w-[1080px] mx-auto px-6 h-14 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
-          <div className="w-7 h-7 rounded-lg bg-[#18261A] flex items-center justify-center text-white font-bold text-[10px] tracking-tight group-hover:bg-[#243d27] transition-colors">
-            SG
-          </div>
-          <span className="hidden sm:block font-semibold text-[#0D0D0D] text-[0.875rem] tracking-tight">
-            Shady Gamal
+        <Link href="/" className="group flex-shrink-0">
+          <span className="font-semibold text-[0.9375rem] text-[#0D0D0D] tracking-[-0.022em] group-hover:opacity-70 transition-opacity select-none">
+            Shady<span className="text-[#80A689] font-bold mx-[5px]">·</span>Gamal
           </span>
         </Link>
 
