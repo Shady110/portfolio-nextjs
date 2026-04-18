@@ -167,9 +167,15 @@
     100% { transform: rotateY(0deg);  }
   }
 
-  /* Apply only on primary touch devices — no hover, coarse pointer */
+  /*
+    Apply only on primary touch devices — no hover, coarse pointer.
+
+    :not(.is-flipped)  — don't animate while the card is showing the back face
+    :not(.peek-done)   — JS adds this class on animationend / animationcancel /
+                         first tap so the peek fires ONCE and never replays.
+  */
   @media (hover: none) and (pointer: coarse) {
-    .flip-card-inner:not(.is-flipped) {
+    .flip-card-inner:not(.is-flipped):not(.peek-done) {
       animation: cardPeek 0.88s cubic-bezier(0.22, 1, 0.36, 1)
                  var(--peek-delay, 0.9s) 1 both;
     }

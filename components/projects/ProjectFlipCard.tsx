@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useState, useRef, useEffect } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import type { Project } from '@/lib/data/projects';
 
@@ -383,14 +383,46 @@ const ProjectFlipCard = memo(function ProjectFlipCard({
   const [isFlipped, setIsFlipped] = useState(false);
   const shouldReduce = useReducedMotion();
 
+  /*
+    ref to the inner 3D element so we can imperatively add .peek-done.
+    All hooks must be declared before any early return (Rules of Hooks).
+    When shouldReduce is true, this ref stays null — the guard in useEffect
+    handles it cleanly.
+  */
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = innerRef.current;
+    if (!el) return;
+
+    /*
+      Mark peek as permanently done after the animation completes or is
+      cancelled. Both events fire in all modern browsers:
+        animationend    — animation ran to completion naturally
+        animationcancel — animation stopped mid-way (e.g. element hidden,
+                          display changed, or browser decided not to run it)
+
+      Once .peek-done is on the element the CSS selector
+      :not(.peek-done) no longer matches, so the animation can never
+      restart — even if .is-flipped is removed and the card flips back.
+    */
+    const markDone = () => el.classList.add('peek-done');
+
+    el.addEventListener('animationend',    markDone, { once: true });
+    el.addEventListener('animationcancel', markDone, { once: true });
+
+    return () => {
+      el.removeEventListener('animationend',    markDone);
+      el.removeEventListener('animationcancel', markDone);
+    };
+  }, []);
+
   // Reduced-motion users get a cross-fade instead of 3D rotation.
   // The peek animation is also suppressed via CSS `animation: none` in the
   // prefers-reduced-motion media query block in globals.css.
   if (shouldReduce) {
     return <ReducedMotionCard project={project} />;
   }
-
-  const toggle = () => setIsFlipped((v) => !v);
 
   /*
     --peek-delay: stagger the cardPeek animation so cards lift one after
@@ -402,11 +434,23 @@ const ProjectFlipCard = memo(function ProjectFlipCard({
   */
   const peekDelay = `${0.9 + index * 0.13}s`;
 
+  /*
+    On every tap, immediately add .peek-done before updating state.
+    This covers the case where the user taps during the peek animation —
+    the CSS animation selector breaks right away (via :not(.peek-done)),
+    so the animation stops cleanly before the flip transition fires.
+    Adding the class is idempotent so subsequent taps are harmless.
+  */
+  const toggle = () => {
+    innerRef.current?.classList.add('peek-done');
+    setIsFlipped((v) => !v);
+  };
+
   return (
     /*
       Outer shell: owns the perspective context + click/keyboard handler.
       CSS (hover: hover) rule handles desktop flip — zero JS.
-      .is-flipped class handles touch/click flip via React state.
+      .is-flipped class + transition handles touch/click flip.
     */
     <div
       className="flip-card group h-[500px] cursor-pointer rounded-2xl
@@ -429,6 +473,7 @@ const ProjectFlipCard = memo(function ProjectFlipCard({
       aria-pressed={isFlipped}
     >
       <div
+        ref={innerRef}
         className={`flip-card-inner relative w-full h-full${
           isFlipped ? ' is-flipped' : ''
         }`}
