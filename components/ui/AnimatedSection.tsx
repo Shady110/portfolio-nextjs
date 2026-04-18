@@ -1,7 +1,16 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+
+// Smaller offsets = snappier, less visual noise on fast machines
+const OFFSETS = {
+  up:    { y: 20, x: 0 },
+  down:  { y: -20, x: 0 },
+  left:  { y: 0, x: 20 },
+  right: { y: 0, x: -20 },
+  none:  { y: 0, x: 0 },
+};
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -19,23 +28,24 @@ export default function AnimatedSection({
   once = true,
 }: AnimatedSectionProps) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once, margin: '-8% 0px' });
+  const shouldReduce = useReducedMotion();
+  // amount: 0.1 fires earlier than the default — content reveals before it's fully in view
+  const inView = useInView(ref, { once, amount: 0.1 });
 
-  const offsets = {
-    up: { y: 36, x: 0 },
-    down: { y: -36, x: 0 },
-    left: { y: 0, x: 36 },
-    right: { y: 0, x: -36 },
-    none: { y: 0, x: 0 },
-  };
+  // Zero JS animation cost for users who prefer reduced motion
+  if (shouldReduce) {
+    return <div ref={ref} className={className}>{children}</div>;
+  }
+
+  const offset = OFFSETS[direction];
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, ...offsets[direction] }}
-      animate={inView ? { opacity: 1, y: 0, x: 0 } : {}}
+      initial={{ opacity: 0, ...offset }}
+      animate={inView ? { opacity: 1, y: 0, x: 0 } : { opacity: 0, ...offset }}
       transition={{
-        duration: 0.75,
+        duration: 0.55,   // was 0.75 — snappier without feeling rushed
         delay,
         ease: [0.22, 1, 0.36, 1],
       }}

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const stagger = {
   hidden: {},
@@ -15,6 +15,9 @@ const up = {
 const STACK = ['React', 'Next.js', 'TypeScript', 'Tailwind', 'Framer Motion'];
 
 export default function Hero() {
+  const shouldReduce = useReducedMotion();
+  const loop = shouldReduce ? 0 : Infinity;
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
       {/* Dot grid */}
@@ -173,7 +176,7 @@ export default function Hero() {
               {/* ── 1. CODE SNIPPET CARD (deepest layer) ── */}
               <motion.div
                 animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut', delay: 1.1 }}
+                transition={{ duration: 6.5, repeat: loop, ease: 'easeInOut', delay: 1.1 }}
                 className="absolute top-[12px] left-0 z-[1]"
                 style={{ opacity: 0.92 }}
               >
@@ -254,7 +257,7 @@ export default function Hero() {
               {/* ── 2. BROWSER WINDOW (hero piece) ── */}
               <motion.div
                 animate={{ y: [0, -9, 0] }}
-                transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 0.25 }}
+                transition={{ duration: 5.5, repeat: loop, ease: 'easeInOut', delay: 0.25 }}
                 className="absolute top-[58px] right-0 z-[2]"
                 style={{ filter: 'drop-shadow(0 28px 52px rgba(24,38,26,0.11))' }}
               >
@@ -460,7 +463,7 @@ export default function Hero() {
               {/* ── 3. MOBILE SCREEN ── */}
               <motion.div
                 animate={{ rotate: -3.5, y: [0, 8, 0] }}
-                transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.65 }}
+                transition={{ duration: 4.8, repeat: loop, ease: 'easeInOut', delay: 0.65 }}
                 initial={{ rotate: -3.5 }}
                 className="absolute bottom-[22px] left-[26px] z-[3]"
               >
@@ -562,7 +565,7 @@ export default function Hero() {
               {/* ── 4. LIGHTHOUSE PERFORMANCE CHIP ── */}
               <motion.div
                 animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.45 }}
+                transition={{ duration: 3.8, repeat: loop, ease: 'easeInOut', delay: 0.45 }}
                 className="absolute z-[5]"
                 style={{ top: 20, right: 10 }}
               >
@@ -605,7 +608,7 @@ export default function Hero() {
               {/* ── 5. DEPLOY NOTIFICATION (glassmorphism) ── */}
               <motion.div
                 animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 4.3, repeat: Infinity, ease: 'easeInOut', delay: 1.25 }}
+                transition={{ duration: 4.3, repeat: loop, ease: 'easeInOut', delay: 1.25 }}
                 className="absolute z-[5]"
                 style={{ bottom: 218, right: -4 }}
               >
@@ -636,7 +639,7 @@ export default function Hero() {
               {/* ── 6. COMPONENTS COUNT CHIP ── */}
               <motion.div
                 animate={{ y: [0, -4, 0] }}
-                transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
+                transition={{ duration: 5.2, repeat: loop, ease: 'easeInOut', delay: 1.8 }}
                 className="absolute z-[4]"
                 style={{ bottom: 28, right: 20 }}
               >
@@ -685,7 +688,7 @@ export default function Hero() {
       >
         <motion.div
           animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 1.8, repeat: loop, ease: 'easeInOut' }}
           className="w-5 h-7 rounded-full border border-[rgba(24,38,26,0.15)] flex items-start justify-center pt-1.5 mx-auto"
         >
           <div className="w-0.5 h-1.5 bg-[#80A689] rounded-full" />
