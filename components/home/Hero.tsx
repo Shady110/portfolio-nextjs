@@ -95,15 +95,18 @@ export default function Hero() {
                 </motion.button>
               </Link>
 
-              <Link href="/contact">
+              <a href="/Shady-Gamal-CV.pdf" target="_blank" rel="noopener noreferrer">
                 <motion.button
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.02, backgroundColor: '#f7faf7' }}
                   whileTap={{ scale: 0.97 }}
-                  className="flex items-center gap-2 px-5 py-2.5 text-[#18261A] font-medium rounded-xl text-[0.875rem] border border-[rgba(24,38,26,0.14)] bg-white hover:bg-[#F2F2F2] transition-colors shadow-sm"
+                  className="flex items-center gap-1.5 px-5 py-2.5 text-[#18261A] font-medium rounded-xl text-[0.875rem] border border-[rgba(24,38,26,0.14)] bg-white hover:bg-[#f7faf7] transition-colors shadow-sm"
                 >
-                  Let&apos;s Talk
+                  Download CV
+                  <svg className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+                  </svg>
                 </motion.button>
-              </Link>
+              </a>
 
               {/* Social links */}
               <div className="flex items-center gap-1.5 ml-1">
