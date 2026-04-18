@@ -80,6 +80,15 @@ export default function Navbar() {
             <span className="w-1.5 h-1.5 bg-[#80A689] rounded-full animate-pulse" />
             Available
           </span>
+          <a href="/Shady-Gamal-CV.pdf" target="_blank" rel="noopener noreferrer">
+            <motion.button
+              whileHover={{ scale: 1.02, backgroundColor: '#f7faf7' }}
+              whileTap={{ scale: 0.97 }}
+              className="px-3.5 py-1.5 text-[0.8125rem] font-medium text-[#18261A] border border-[rgba(24,38,26,0.18)] rounded-lg bg-white/60 hover:bg-[#f7faf7] transition-colors"
+            >
+              Resume
+            </motion.button>
+          </a>
           <Link href="/contact">
             <motion.button
               whileHover={{ scale: 1.02, backgroundColor: '#243d27' }}
@@ -130,9 +139,17 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <a
+                href="/Shady-Gamal-CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 px-3.5 py-2.5 text-center text-sm font-medium text-[#18261A] border border-[rgba(24,38,26,0.14)] rounded-lg hover:bg-[#F2F2F2] transition-colors"
+              >
+                Download CV
+              </a>
               <Link
                 href="/contact"
-                className="mt-2 px-3.5 py-2.5 text-center text-sm font-medium text-white bg-[#18261A] rounded-lg"
+                className="mt-1 px-3.5 py-2.5 text-center text-sm font-medium text-white bg-[#18261A] rounded-lg"
               >
                 Get in touch
               </Link>
