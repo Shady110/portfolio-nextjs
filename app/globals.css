@@ -126,6 +126,7 @@
   /* Touch / click: JS toggles .is-flipped */
   .flip-card-inner.is-flipped {
     transform: rotateY(180deg);
+    animation: none; /* cancel any in-progress peek immediately */
   }
   /* Each face: hide its reverse side while the other is showing */
   .flip-face {
@@ -139,6 +140,55 @@
   /* Reduced-motion card: cross-fade instead of rotate */
   .flip-fade-face {
     transition: opacity 0.35s ease;
+  }
+
+  /*
+    ── Mobile flip affordance ──────────────────────────────────────────────────
+
+    On touch devices (no hover pointer) users have no hover cue, so the card
+    performs a single brief "peek" tilt on load — lifting just enough to reveal
+    a sliver of the dark back face. The card shows users exactly what will
+    happen before they tap.
+
+    Anatomy:
+      0%  → card at rest (rotateY 0°)
+      38% → lifted 22° — back-face edge becomes visible at card right
+      58% → slight settle at 17° — elastic feel
+      100%→ returns to 0°
+
+    Delay is set per-card via the --peek-delay CSS custom property (set as
+    inline style in JSX), staggering the peeks so they cascade across the grid
+    rather than firing simultaneously.
+  */
+  @keyframes cardPeek {
+    0%   { transform: rotateY(0deg);  }
+    38%  { transform: rotateY(22deg); }
+    58%  { transform: rotateY(17deg); }
+    100% { transform: rotateY(0deg);  }
+  }
+
+  /* Apply only on primary touch devices — no hover, coarse pointer */
+  @media (hover: none) and (pointer: coarse) {
+    .flip-card-inner:not(.is-flipped) {
+      animation: cardPeek 0.88s cubic-bezier(0.22, 1, 0.36, 1)
+                 var(--peek-delay, 0.9s) 1 both;
+    }
+  }
+
+  /*
+    ── Device-contextual flip hint copy ────────────────────────────────────────
+
+    Two spans sit inside the hint row. CSS shows only the correct one based on
+    whether the primary pointer device supports hover. No JS, no hydration
+    mismatch — the server renders both, CSS toggles visibility.
+  */
+  @media (hover: hover) {
+    /* Hover-capable device (desktop/trackpad): show "Hover" text */
+    .flip-hint-touch { display: none; }
+  }
+  @media (hover: none) {
+    /* Touch device: show "Tap to flip", hide "Hover" text */
+    .flip-hint-hover { display: none; }
   }
 
   /* ── Logo card entrance ── */
@@ -178,9 +228,10 @@
     animation: none;
   }
 
-  /* Disable 3D flip — cross-fade fallback handled in JS via useReducedMotion */
+  /* Disable 3D flip and mobile peek — cross-fade fallback handled in JS */
   .flip-card-inner {
     transition: none;
+    animation: none;
   }
 
   /* Prevent layout-shift "bounce" on card hovers */

@@ -149,14 +149,30 @@ function CardFront({ project }: { project: Project }) {
         {/* Flex spacer — pushes hint to bottom */}
         <div className="flex-1" />
 
-        {/* Flip hint — always visible so interaction is discoverable */}
+        {/*
+          Flip discovery hint — device-contextual copy.
+
+          Two <span> elements render server-side; CSS hides the wrong one:
+            .flip-hint-hover  →  shown on (hover: hover) devices only
+            .flip-hint-touch  →  shown on (hover: none)  devices only
+
+          The touch variant is slightly bolder/more opaque — a tap CTA needs
+          more visual weight than a passive "hover" reminder.
+        */}
         <div
-          className="flex items-center justify-center gap-1.5
-                     text-[0.625rem] font-medium text-[rgba(24,38,26,0.28)]
-                     group-hover:text-[rgba(24,38,26,0.5)] transition-colors duration-300"
+          className="flex items-center justify-center gap-1.5 text-[0.625rem] font-medium
+                     text-[rgba(24,38,26,0.28)] group-hover:text-[rgba(24,38,26,0.5)]
+                     transition-colors duration-300 select-none"
         >
           <FlipIcon />
-          <span>Hover for contributions &amp; impact</span>
+          {/* Desktop hint */}
+          <span className="flip-hint-hover">
+            Hover for contributions &amp; impact
+          </span>
+          {/* Mobile hint — slightly more prominent to work as a tap CTA */}
+          <span className="flip-hint-touch font-semibold text-[rgba(24,38,26,0.42)]">
+            Tap to flip
+          </span>
         </div>
       </div>
     </div>
@@ -358,29 +374,44 @@ function ReducedMotionCard({ project }: { project: Project }) {
 
 const ProjectFlipCard = memo(function ProjectFlipCard({
   project,
+  index = 0,
 }: {
   project: Project;
+  /** Grid position (0-based) — used to stagger the mobile peek animation */
+  index?: number;
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const shouldReduce = useReducedMotion();
 
-  // Reduced-motion users get a cross-fade instead of 3D rotation
+  // Reduced-motion users get a cross-fade instead of 3D rotation.
+  // The peek animation is also suppressed via CSS `animation: none` in the
+  // prefers-reduced-motion media query block in globals.css.
   if (shouldReduce) {
     return <ReducedMotionCard project={project} />;
   }
 
   const toggle = () => setIsFlipped((v) => !v);
 
+  /*
+    --peek-delay: stagger the cardPeek animation so cards lift one after
+    another (cascade) rather than all at once. Base delay is 0.9s (after
+    the entrance fade-in completes), each subsequent card adds 0.13s.
+
+    Card 0 → 0.90s   Card 1 → 1.03s
+    Card 2 → 1.16s   Card 3 → 1.29s
+  */
+  const peekDelay = `${0.9 + index * 0.13}s`;
+
   return (
     /*
       Outer shell: owns the perspective context + click/keyboard handler.
-      CSS hover handles desktop flip without JS.
-      `.is-flipped` class handles touch/click flip via state.
+      CSS (hover: hover) rule handles desktop flip — zero JS.
+      .is-flipped class handles touch/click flip via React state.
     */
     <div
-      className="flip-card group h-[500px] cursor-pointer
-                 outline-none focus-visible:ring-2 focus-visible:ring-[#80A689] focus-visible:ring-offset-2
-                 rounded-2xl"
+      className="flip-card group h-[500px] cursor-pointer rounded-2xl
+                 outline-none focus-visible:ring-2 focus-visible:ring-[#80A689]
+                 focus-visible:ring-offset-2"
       onClick={toggle}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -392,8 +423,8 @@ const ProjectFlipCard = memo(function ProjectFlipCard({
       role="button"
       aria-label={`${project.title} — ${
         isFlipped
-          ? 'showing contributions, click to see overview'
-          : 'click or hover to see contributions and impact'
+          ? 'showing contributions, tap to see overview'
+          : 'tap or hover to see contributions and impact'
       }`}
       aria-pressed={isFlipped}
     >
@@ -401,6 +432,7 @@ const ProjectFlipCard = memo(function ProjectFlipCard({
         className={`flip-card-inner relative w-full h-full${
           isFlipped ? ' is-flipped' : ''
         }`}
+        style={{ '--peek-delay': peekDelay } as React.CSSProperties}
       >
         {/* ── Front ── */}
         <div className="flip-face absolute inset-0">
