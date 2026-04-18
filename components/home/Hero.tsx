@@ -41,7 +41,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 section-container w-full pt-28 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 md:gap-8 lg:gap-16 items-center">
 
           {/* ── Left: Text ── */}
           <motion.div variants={stagger} initial="hidden" animate="visible">
@@ -151,6 +151,162 @@ export default function Hero() {
                   {tech}
                 </span>
               ))}
+            </motion.div>
+          </motion.div>
+
+          {/* ── Mobile / Tablet: Compact Dashboard Visual ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="block lg:hidden relative pt-6 pb-6"
+          >
+            {/* Ambient glow */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse 90% 80% at 50% 50%, rgba(189,242,202,0.18) 0%, transparent 70%)' }}
+              aria-hidden
+            />
+
+            {/* Dashboard card — single gentle float */}
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 5, repeat: loop, ease: 'easeInOut', delay: 0.8 }}
+              className="relative"
+              style={{ filter: 'drop-shadow(0 18px 44px rgba(24,38,26,0.11))' }}
+            >
+              <div
+                className="w-full rounded-[14px] overflow-hidden bg-white"
+                style={{ border: '1px solid rgba(24,38,26,0.09)' }}
+              >
+                {/* Chrome bar */}
+                <div
+                  className="flex items-center gap-2.5 px-3"
+                  style={{ height: 32, background: '#F2F2F2', borderBottom: '1px solid rgba(24,38,26,0.07)' }}
+                >
+                  <div className="flex gap-1.5 flex-shrink-0">
+                    {[0, 1, 2].map((i) => (
+                      <div key={i} className="w-2 h-2 rounded-full" style={{ background: 'rgba(24,38,26,0.14)' }} />
+                    ))}
+                  </div>
+                  <div className="flex-1 mx-1">
+                    <div
+                      className="flex items-center gap-1.5 px-2"
+                      style={{ height: 19, background: 'white', border: '1px solid rgba(24,38,26,0.08)', borderRadius: 5 }}
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'rgba(128,166,137,0.6)' }} />
+                      <span className="font-mono truncate" style={{ fontSize: '0.48rem', color: '#80A689' }}>
+                        app.dashboard.io / overview
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-3.5">
+                  {/* Page header */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <div style={{ height: 7, width: 60, background: '#0D0D0D', borderRadius: 3, marginBottom: 4 }} />
+                      <div style={{ height: 5, width: 88, background: 'rgba(24,38,26,0.11)', borderRadius: 2 }} />
+                    </div>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <div style={{ height: 22, width: 52, background: '#F2F2F2', border: '1px solid rgba(24,38,26,0.08)', borderRadius: 7 }} />
+                      <div style={{ height: 22, width: 38, background: '#18261A', borderRadius: 7 }} />
+                    </div>
+                  </div>
+
+                  {/* KPI cards */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 6, marginBottom: 10 }}>
+                    {[
+                      { label: 'Revenue', val: '$48.2k', delta: '↑ 12%' },
+                      { label: 'Users',   val: '3,841',  delta: '↑ 8.3%' },
+                      { label: 'Conv.',   val: '4.6%',   delta: '↑ 0.3%' },
+                    ].map((s) => (
+                      <div
+                        key={s.label}
+                        style={{ background: '#F8F9F8', border: '1px solid rgba(24,38,26,0.06)', borderRadius: 9, padding: '7px 8px' }}
+                      >
+                        <div style={{ fontSize: '0.44rem', color: '#80A689', fontWeight: 500, marginBottom: 2 }}>{s.label}</div>
+                        <div style={{ fontSize: '0.68rem', fontWeight: 700, color: '#0D0D0D', lineHeight: 1.2 }}>{s.val}</div>
+                        <div style={{ fontSize: '0.44rem', color: '#80A689', marginTop: 1 }}>{s.delta}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Area chart */}
+                  <div
+                    style={{ background: '#F8F9F8', border: '1px solid rgba(24,38,26,0.05)', borderRadius: 9, padding: '6px 8px', marginBottom: 9 }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span style={{ fontSize: '0.44rem', color: '#3a5c3e', fontWeight: 600 }}>Revenue trend</span>
+                      <span style={{ fontSize: '0.44rem', color: '#80A689' }}>6 months</span>
+                    </div>
+                    <svg width="100%" height="46" viewBox="0 0 310 46" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="mobileAreaFill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#BDF2CA" stopOpacity={0.55} />
+                          <stop offset="100%" stopColor="#BDF2CA" stopOpacity={0.03} />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M0,38 C25,34 50,28 82,22 C108,15 132,27 160,16 C186,6 212,14 240,5 C260,0 284,3 310,1"
+                        fill="none" stroke="#80A689" strokeWidth="1.6" strokeLinecap="round"
+                      />
+                      <path
+                        d="M0,38 C25,34 50,28 82,22 C108,15 132,27 160,16 C186,6 212,14 240,5 C260,0 284,3 310,1 L310,46 L0,46 Z"
+                        fill="url(#mobileAreaFill)"
+                      />
+                      {[[82, 22], [160, 16], [240, 5], [310, 1]].map(([cx, cy], i) => (
+                        <circle key={i} cx={cx} cy={cy} r={2.2} fill="white" stroke="#80A689" strokeWidth="1.5" />
+                      ))}
+                    </svg>
+                  </div>
+
+                  {/* Activity row */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                    <div style={{ width: 14, height: 14, borderRadius: 5, flexShrink: 0, background: 'rgba(189,242,202,0.55)', border: '1px solid rgba(24,38,26,0.08)' }} />
+                    <div style={{ flex: 1, fontSize: '0.44rem', color: '#3a5c3e', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      Design system v3 · <span style={{ color: '#80A689' }}>Deployed to production</span>
+                    </div>
+                    <div style={{ fontSize: '0.44rem', color: '#80A689', flexShrink: 0 }}>2m ago</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Lighthouse chip — top-right */}
+            <motion.div
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 3.8, repeat: loop, ease: 'easeInOut', delay: 1.2 }}
+              className="absolute top-2 -right-1 z-10"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 11px 6px 7px', borderRadius: 12, background: 'white', border: '1px solid rgba(24,38,26,0.1)', boxShadow: '0 6px 22px rgba(24,38,26,0.1)' }}>
+                <div style={{ width: 26, height: 26, borderRadius: 8, background: 'rgba(189,242,202,0.5)', border: '1px solid rgba(24,38,26,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#18261A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                  </svg>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.44rem', color: '#80A689', fontWeight: 500, lineHeight: 1.3 }}>Lighthouse</div>
+                  <div style={{ fontSize: '0.76rem', fontWeight: 700, color: '#18261A', lineHeight: 1.15 }}>98 / 100</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Build deployed chip — bottom-left */}
+            <motion.div
+              animate={{ y: [0, 4, 0] }}
+              transition={{ duration: 4.2, repeat: loop, ease: 'easeInOut', delay: 0.6 }}
+              className="absolute -bottom-1 -left-1 z-10"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 11px 6px 9px', borderRadius: 11, background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(24,38,26,0.08)', boxShadow: '0 6px 20px rgba(24,38,26,0.09)' }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#80A689] animate-pulse flex-shrink-0" />
+                <div>
+                  <div style={{ fontSize: '0.44rem', fontWeight: 600, color: '#0D0D0D', lineHeight: 1.3 }}>Build deployed</div>
+                  <div style={{ fontSize: '0.4rem', color: '#80A689' }}>production · just now</div>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
 
