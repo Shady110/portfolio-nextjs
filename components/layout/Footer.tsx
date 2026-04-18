@@ -20,7 +20,7 @@ const SOCIAL = [
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com',
+    href: 'https://www.linkedin.com/in/shady--gamal',
     icon: (
       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -37,14 +37,16 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-[#18261A] flex items-center justify-center text-white font-bold text-[10px]">
-                SG
-              </div>
-              <span className="font-semibold text-[#0D0D0D] text-sm">Shady Gamal</span>
+            <div className="mb-3">
+              <span className="font-semibold text-[0.9375rem] text-[#0D0D0D] tracking-[-0.022em] select-none">
+                Shady<span className="text-[#80A689] font-bold mx-[5px]">·</span>Gamal
+              </span>
             </div>
+            <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.07em] mb-2">
+              Front-End Developer
+            </p>
             <p className="text-[0.8125rem] text-[#3a5c3e] leading-relaxed">
-              Front-End Developer crafting polished digital products with strong UI thinking.
+              Crafting polished digital products with strong UI thinking.
             </p>
           </div>
 
@@ -72,10 +74,10 @@ export default function Footer() {
               Contact
             </p>
             <a
-              href="mailto:hi@shadygamal.dev"
+              href="mailto:shaadygamal@gmail.com"
               className="text-[0.8125rem] text-[#3a5c3e] hover:text-[#18261A] transition-colors block mb-3"
             >
-              hi@shadygamal.dev
+              shaadygamal@gmail.com
             </a>
             <div className="flex items-center gap-1.5">
               {SOCIAL.map((s) => (
