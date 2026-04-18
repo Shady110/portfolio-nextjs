@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Dark forest green background, 22% radius rounding — premium square not circle -->
+  <rect width="32" height="32" rx="7" fill="#18261A"/>
+
+  <!--
+    Geometric S mark — hand-computed Bezier path, no font dependency.
+    Spans x[11–21] y[7.25–24.75], centered at (16,16).
+    Drawn as an open stroke so it renders cleanly at 16px and above.
+
+    Path anatomy:
+      M 20 10.75           → start: right side of upper loop
+      upper-right curve    → sweep counterclockwise to top center
+      upper-left curve     → sweep down to left side
+      middle diagonal      → cross from left to right (the S spine)
+      lower-right curve    → sweep clockwise down to bottom right
+      lower-center curve   → sweep to bottom center
+      lower-left curve     → sweep up to left side (end)
+  -->
+  <path
+    d="M 20 10.75
+       C 20 8.25 18.5 7.25 16 7.25
+       C 13.5 7.25 11 8.75 11 11.25
+       C 11 13.75 12.5 15.25 15 15.75
+       L 17 16.25
+       C 19.5 16.75 21 18.25 21 20.75
+       C 21 23.25 19.5 24.75 16 24.75
+       C 12.5 24.75 11 23.25 11 20.75"
+    stroke="white"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

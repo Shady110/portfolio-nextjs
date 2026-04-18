@@ -26,6 +26,15 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Shady Gamal' }],
   creator: 'Shady Gamal',
+  icons: {
+    // SVG favicon — modern browsers (Chrome 80+, Firefox, Edge, Safari 12+)
+    // Scales perfectly from 16px to any size from a single file.
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    // app/icon.tsx auto-generates /icon.png (32×32) as PNG fallback.
+    // app/apple-icon.tsx auto-generates /apple-icon.png (180×180).
+  },
+  // Tints the browser chrome / address bar on mobile to match brand
+  other: { 'theme-color': '#18261A' },
   openGraph: {
     type: 'website',
     locale: 'en_US',
