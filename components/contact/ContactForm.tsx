@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TextField, Button } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 interface FormState {
   name: string;
@@ -93,11 +94,7 @@ export default function ContactForm() {
             <Button type="submit" variant="contained" disabled={status === 'loading'} sx={{ minWidth: 130 }}>
               {status === 'loading' ? (
                 <span className="flex items-center gap-2">
-                  <motion.span
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
-                    className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full"
-                  />
+                  <span className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   Sending…
                 </span>
               ) : 'Send Message'}

@@ -110,8 +110,37 @@
   }
   .animate-marquee {
     animation: marquee 28s linear infinite;
+    will-change: transform; /* promote to compositor layer — no layout recalc */
   }
   .animate-marquee:hover {
     animation-play-state: paused;
+  }
+}
+
+/* ── Accessibility: respect OS-level reduced-motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  /* Kill all CSS infinite animations */
+  .animate-marquee {
+    animation: none;
+  }
+
+  /* Prevent layout-shift "bounce" on card hovers */
+  .surface-card,
+  .surface-card-gray {
+    transition: none;
+  }
+  .surface-card:hover {
+    transform: none;
+    box-shadow: 0 1px 3px rgba(24, 38, 26, 0.05); /* restore base shadow */
+  }
+
+  /* Instant scroll — no momentum surprises */
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Kill the animated availability pulse dots */
+  .animate-pulse {
+    animation: none;
   }
 }

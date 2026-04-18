@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
 const INDUSTRIES = [
@@ -64,11 +63,7 @@ export default function IndustriesExperience() {
       <div className="flex flex-col gap-0">
         {INDUSTRIES.map((ind, i) => (
           <AnimatedSection key={ind.label} delay={i * 0.07}>
-            <motion.div
-              whileHover={{ backgroundColor: 'rgba(189,242,202,0.04)' }}
-              transition={{ duration: 0.2 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 py-9 border-b border-[rgba(24,38,26,0.06)] last:border-0 rounded-xl px-4 -mx-4"
-            >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 py-9 border-b border-[rgba(24,38,26,0.06)] last:border-0 rounded-xl px-4 -mx-4 hover:bg-[rgba(189,242,202,0.04)] transition-colors duration-200">
               {/* Left — number + category */}
               <div className="lg:col-span-4 flex items-start gap-4">
                 <span
@@ -111,7 +106,7 @@ export default function IndustriesExperience() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           </AnimatedSection>
         ))}
       </div>
