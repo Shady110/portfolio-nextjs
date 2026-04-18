@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #ffffff;
+    --surface: #F2F2F2;
+    --surface-2: #e4ede6;
+    --border: rgba(24, 38, 26, 0.08);
+    --border-strong: rgba(24, 38, 26, 0.14);
+    --text: #0D0D0D;
+    --text-secondary: #3a5c3e;
+    --text-tertiary: #80A689;
+    --accent: #80A689;
+    --accent-dark: #18261A;
+    --accent-mint: #BDF2CA;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-inter), Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(24, 38, 26, 0.18);
+    border-radius: 10px;
+  }
+
+  ::selection {
+    background: rgba(189, 242, 202, 0.55);
+    color: #18261A;
+  }
+}
+
+@layer utilities {
+  /* ── Heading gradient: sage → forest ── */
+  .text-gradient {
+    background: linear-gradient(135deg, #80A689 0%, #18261A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── White card with green-tinted border ── */
+  .surface-card {
+    background: #ffffff;
+    border: 1px solid rgba(24, 38, 26, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(24, 38, 26, 0.05);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .surface-card:hover {
+    box-shadow: 0 8px 32px rgba(24, 38, 26, 0.09);
+    transform: translateY(-2px);
+  }
+
+  /* ── Soft green-tinted surface ── */
+  .surface-card-gray {
+    background: #F2F2F2;
+    border: 1px solid rgba(24, 38, 26, 0.06);
+    border-radius: 14px;
+    transition: background 0.2s ease;
+  }
+  .surface-card-gray:hover {
+    background: #e4ede6;
+  }
+
+  /* ── Dot grid — green-tinted dots on white ── */
+  .dot-grid {
+    background-image: radial-gradient(rgba(24, 38, 26, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* ── Layout ── */
+  .section-container {
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .page-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  /* ── Marquee ── */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
