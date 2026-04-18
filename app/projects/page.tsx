@@ -46,7 +46,7 @@ export default function ProjectsPage() {
             </h1>
             <p className="text-[0.9375rem] text-[#3a5c3e] leading-relaxed max-w-xl">
               Four distinct engagements across SaaS platforms, full-stack commerce, agency
-              operations, and healthcare. Hover any card to see contributions and impact.
+              operations, and healthcare. Flip any card to see contributions and impact.
             </p>
           </AnimatedSection>
         </div>
@@ -63,7 +63,7 @@ export default function ProjectsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {projects.map((project, i) => (
             <AnimatedSection key={project.id} delay={i * 0.07}>
-              <ProjectFlipCard project={project} />
+              <ProjectFlipCard project={project} index={i} />
             </AnimatedSection>
           ))}
         </div>
