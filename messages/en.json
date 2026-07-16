@@ -216,7 +216,7 @@
       "entries": {
         "blue-ribbon": {
           "period": "Dec 2024 – Present",
-          "role": "Front-End Developer",
+          "role": "Software Engineer",
           "summary": "Production frontend work on sports club management platforms and multi-tenant dashboards — the kind of interfaces that real operators depend on every day.",
           "responsibilities": [
             "Built responsive interfaces across multiple club brands using React, Next.js, and Tailwind CSS",
@@ -329,7 +329,7 @@
       "eyebrow": "Selected Work",
       "titleLead": "Real projects.",
       "titleHighlight": "Real production.",
-      "description": "Four distinct engagements across SaaS platforms, full-stack commerce, agency operations, and healthcare. Open any card for contributions and impact."
+      "description": "Five distinct engagements across SaaS platforms, full-stack commerce, agency operations, healthcare, and AI-native product design tooling. Open any card for contributions and impact."
     },
     "card": {
       "viewDetails": "View details",
@@ -352,9 +352,9 @@
       ]
     },
     "stat": {
-      "value": "4",
+      "value": "5",
       "label": "live production products",
-      "note": "shipped across SaaS, commerce, agency & healthcare"
+      "note": "shipped across SaaS, commerce, agency, healthcare & AI tooling"
     },
     "cta": {
       "eyebrow": "Next Steps",
@@ -398,19 +398,20 @@
         "impact": "A live, operational platform serving the Moldndie brand as a real commercial product. Demonstrates full-stack delivery capability with end-to-end technical and product ownership from zero to production."
       },
       "flow": {
-        "type": "Growth Agency · E-Commerce Enablement",
-        "category": "Agency / Startup",
-        "summary": "A growth agency helping Egyptian e-commerce brands improve their digital presence and sales performance. Co-founded, built, and technically operated — from the agency website through to client project delivery. I owned the technical direction and built every frontend output.",
+        "type": "Agency Operations Platform · AI-Assisted E-Commerce",
+        "category": "Agency Platform",
+        "summary": "Egypt's e-commerce content studio, evolved from a marketing site into a full multi-tenant operations platform. A public site brings in sellers; an internal dashboard runs the agency's day-to-day; and a client portal gives every account visibility into their own work — backed by two AI automation pipelines that turn raw product spreadsheets and photos into marketplace-ready listings.",
         "roles": ["Co-Founder", "Technical Lead"],
         "contributions": [
-          "Co-founded and technically led a growth-focused agency serving e-commerce clients",
-          "Built the agency website with a conversion-focused landing page and lead generation UX",
-          "Delivered brand websites for clients including All Seasons MK",
-          "Owned technical direction, execution standards, and delivery quality across all projects",
-          "Built responsive, performance-optimised web experiences tailored to each client brief"
+          "Co-founded and technically lead Flow, an e-commerce content studio serving Amazon, Noon, TikTok Shop, and Shopify sellers in Egypt",
+          "Rebranded and rebuilt the bilingual (EN/AR, full RTL) marketing site around a new brand identity and positioning",
+          "Architected a multi-tenant platform with three subdomain-routed portals: marketing, an internal ops dashboard, and a client portal",
+          "Built the internal operations suite — client and task management, role-based access control, real-time chat, and full invoicing and expense tracking against a live Postgres schema",
+          "Designed and shipped two AI automation pipelines: Gemini-powered marketplace listing generation from raw spreadsheets, and automated product photography cleanup",
+          "Built an in-app CMS so the marketing site's copy can be updated without a redeploy"
         ],
-        "challenge": "Operating as both engineer and business owner simultaneously — setting technical standards, managing client relationships, and ensuring every deliverable reflected the quality of the agency's own brand.",
-        "impact": "A real operating business with live client work and delivered projects. Demonstrates founder-level ownership, independent decision-making, and the ability to ship frontend products from client brief through to handoff."
+        "challenge": "Elevating a single-purpose marketing site into a real multi-tenant operations platform — with its own auth, permissions, billing, and AI job queue — without a rewrite, and without breaking the live public site sellers were already signing up through.",
+        "impact": "The public studio is live and onboarding new sellers. The internal operations platform — client management, finance, real-time chat, and two working AI automation pipelines — is fully built and running against a live schema, currently in pre-launch ahead of onboarding the first team onto the dashboard. Demonstrates the ability to grow a shipped product into real infrastructure without losing momentum."
       },
       "med-eg": {
         "type": "Healthcare Digital Platform",
@@ -426,6 +427,22 @@
         ],
         "challenge": "Healthcare interfaces carry real user consequences — ambiguity in layout or copy has direct implications for the people relying on them. Every component decision has to be deliberate, clear, and auditable under scrutiny.",
         "impact": "Currently in active development. Will serve as a modernised digital layer for healthcare access in the Egyptian market, built with scalable frontend architecture and a strong emphasis on usability in a high-stakes domain."
+      },
+      "arc": {
+        "type": "AI Product Design Platform · Research to Prototype",
+        "category": "AI SaaS",
+        "summary": "An AI-native platform that stands in for a full product design team — taking research from raw user interviews through synthesis, structured design-thinking artefacts, 5-day design sprints, and shippable UI screens, all in one connected workspace. Founded and built solo: product strategy, full-stack engineering, and the AI orchestration layer are all my own work.",
+        "roles": ["Founder", "Full-Stack Engineer"],
+        "contributions": [
+          "Founded and built ARC end-to-end — product strategy, UX, and full-stack engineering — under my company BlueRibbon",
+          "Architected a dual-provider AI backend (Claude for structured reasoning, Gemini for high-volume interview and session text) with per-call usage logging and bring-your-own-key support",
+          "Built a code-based design pipeline — PRD parsing into a wireframe spec, grayscale wireframes, branded hi-fi screens, and natural-language screen editing — with no image-generation model in the loop",
+          "Shipped research tooling for interview scheduling, live session guidance, and automatic call summarisation",
+          "Designed and built a custom Figma plugin with a pixel-perfect export mode (real headless-Chromium rendering) and an editable html.to.design mode",
+          "Harmonised the authenticated app's design system with the marketing site around a shared token set and a cohesive green/lime brand identity"
+        ],
+        "challenge": "Making five distinct product-design disciplines — research, synthesis, sprint facilitation, UI generation, and cross-project insight — feel like one coherent tool instead of five bolted-together AI features, while keeping every AI output structured enough to be genuinely usable rather than impressive-looking noise.",
+        "impact": "A working, deployed AI product-design platform built from the ground up — spanning research tooling, generative design artefacts, a code-based UI pipeline, and a custom Figma export plugin. Demonstrates full-stack ownership across frontend, backend, AI system design, and product design in a single build."
       }
     }
   },
