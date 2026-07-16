@@ -148,33 +148,28 @@ export default function ProjectsBento() {
   const projects = useProjects();
   const [selected, setSelected] = useState<Project | null>(null);
 
-  // Named lookups keep the bento layout readable.
-  const [p0, p1, p2, p3] = projects;
+  // First project leads large next to the deliverables accent card; the rest
+  // flow through the remaining grid cells, whatever the project count.
+  const [lead, ...rest] = projects;
 
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-3 auto-rows-auto gap-4">
         <AnimatedSection className="lg:col-span-2" delay={0}>
-          <ProjectCard project={p0} large onOpen={() => setSelected(p0)} />
+          <ProjectCard project={lead} large onOpen={() => setSelected(lead)} />
         </AnimatedSection>
 
         <AnimatedSection className="lg:row-span-2" delay={0.06}>
           <DeliverablesCard />
         </AnimatedSection>
 
-        <AnimatedSection delay={0.12}>
-          <ProjectCard project={p1} onOpen={() => setSelected(p1)} />
-        </AnimatedSection>
+        {rest.map((project, i) => (
+          <AnimatedSection key={project.id} delay={0.12 + i * 0.04}>
+            <ProjectCard project={project} onOpen={() => setSelected(project)} />
+          </AnimatedSection>
+        ))}
 
-        <AnimatedSection delay={0.16}>
-          <ProjectCard project={p2} onOpen={() => setSelected(p2)} />
-        </AnimatedSection>
-
-        <AnimatedSection className="lg:col-span-2" delay={0.2}>
-          <ProjectCard project={p3} onOpen={() => setSelected(p3)} />
-        </AnimatedSection>
-
-        <AnimatedSection delay={0.24}>
+        <AnimatedSection delay={0.12 + rest.length * 0.04}>
           <StatCard />
         </AnimatedSection>
       </div>
