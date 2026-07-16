@@ -1,22 +1,24 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
+import { Link } from '@/i18n/navigation';
 import AnimatedSection from '@/components/ui/AnimatedSection';
-import { skillCategories } from '@/lib/data/skills';
+import { useLocalizedSkillCategories } from '@/lib/data/getSkills';
 
 export default function SkillsSnapshot() {
-  const preview = skillCategories.slice(0, 3);
+  const t = useTranslations('home.skillsSnapshot');
+  const preview = useLocalizedSkillCategories().slice(0, 3);
 
   return (
     <section className="page-section section-container">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
         <AnimatedSection>
           <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-3">
-            Capabilities
+            {t('eyebrow')}
           </p>
           <h2 className="text-[clamp(1.5rem,2.6vw,2rem)] font-bold tracking-[-0.03em] text-[#0D0D0D] leading-tight">
-            The stack behind the work.
+            {t('title')}
           </h2>
         </AnimatedSection>
         <AnimatedSection delay={0.08}>
@@ -24,9 +26,9 @@ export default function SkillsSnapshot() {
             href="/skills"
             className="flex items-center gap-1.5 text-[0.8125rem] font-medium text-[#80A689] hover:text-[#18261A] transition-colors group flex-shrink-0"
           >
-            Full breakdown
+            {t('fullBreakdown')}
             <svg
-              className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
+              className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform rtl:-scale-x-100"
               fill="none" stroke="currentColor" viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -62,7 +64,7 @@ export default function SkillsSnapshot() {
                 {cat.skills.map((skill) => (
                   <span
                     key={skill.name}
-                    className={`px-2.5 py-1 text-[0.75rem] font-medium rounded-lg transition-colors ${
+                    className={`latin px-2.5 py-1 text-[0.75rem] font-medium rounded-lg transition-colors ${
                       skill.primary
                         ? 'bg-[#BDF2CA]/40 border border-[rgba(24,38,26,0.1)] text-[#18261A]'
                         : 'bg-[#F2F2F2] border border-[rgba(24,38,26,0.06)] text-[#3a5c3e]'

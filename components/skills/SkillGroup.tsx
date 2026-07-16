@@ -32,7 +32,7 @@ function FeaturedCard({ category, delay }: { category: SkillCategory; delay: num
         <div className="flex flex-wrap items-baseline gap-x-0 gap-y-1 mb-6">
           {primary.map((s, i) => (
             <span key={s.name} className="inline-flex items-baseline">
-              <span className="text-[1rem] font-semibold text-[#0D0D0D] tracking-tight">
+              <span className="latin text-[1rem] font-semibold text-[#0D0D0D] tracking-tight">
                 {s.name}
               </span>
               {i < primary.length - 1 && (
@@ -52,7 +52,7 @@ function FeaturedCard({ category, delay }: { category: SkillCategory; delay: num
           {secondary.map((s) => (
             <span
               key={s.name}
-              className="px-3 py-1 text-[0.75rem] font-medium rounded-xl
+              className="latin px-3 py-1 text-[0.75rem] font-medium rounded-xl
                          border border-[rgba(24,38,26,0.08)] text-[#3a5c3e] bg-[#F9FAF9]
                          hover:border-[rgba(24,38,26,0.15)] hover:text-[#18261A]
                          transition-colors duration-150 cursor-default"
@@ -102,7 +102,7 @@ function StandardCard({ category, delay }: { category: SkillCategory; delay: num
                 style={{ background: '#80A689' }}
                 aria-hidden
               />
-              <span className="text-[0.875rem] font-medium text-[#18261A]">{s.name}</span>
+              <span className="latin text-[0.875rem] font-medium text-[#18261A]">{s.name}</span>
             </li>
           ))}
         </ul>
@@ -118,7 +118,7 @@ function StandardCard({ category, delay }: { category: SkillCategory; delay: num
             {secondary.map((s) => (
               <span
                 key={s.name}
-                className="px-2.5 py-1 text-[0.6875rem] font-medium rounded-lg cursor-default
+                className="latin px-2.5 py-1 text-[0.6875rem] font-medium rounded-lg cursor-default
                            bg-[#F2F2F2] border border-[rgba(24,38,26,0.07)] text-[#3a5c3e]
                            hover:border-[rgba(24,38,26,0.13)] hover:text-[#18261A]
                            transition-colors duration-150"

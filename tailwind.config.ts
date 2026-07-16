@@ -24,6 +24,12 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        arabic: ['var(--font-arabic)', 'IBM Plex Sans Arabic', 'sans-serif'],
+      },
+      boxShadow: {
+        card: '0 1px 3px rgba(24,38,26,0.05)',
+        'card-hover': '0 8px 32px rgba(24,38,26,0.10)',
+        float: '0 18px 44px rgba(24,38,26,0.11)',
       },
     },
   },

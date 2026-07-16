@@ -37,6 +37,34 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* ── Arabic / RTL ──────────────────────────────────────────────────────────
+     On Arabic pages the whole document flips to RTL and swaps to the Arabic
+     type family. Negative letter-spacing (used heavily for Latin display type)
+     breaks Arabic glyph joining, so it is neutralised for RTL text. */
+  [dir='rtl'] body {
+    font-family: var(--font-arabic), 'IBM Plex Sans Arabic', var(--font-inter),
+      system-ui, sans-serif;
+  }
+  [dir='rtl'] h1,
+  [dir='rtl'] h2,
+  [dir='rtl'] h3,
+  [dir='rtl'] h4,
+  [dir='rtl'] h5,
+  [dir='rtl'] h6,
+  [dir='rtl'] p,
+  [dir='rtl'] span,
+  [dir='rtl'] a,
+  [dir='rtl'] button,
+  [dir='rtl'] li {
+    letter-spacing: normal !important;
+  }
+  /* Latin runs inside Arabic text (brand/tech names) keep the Latin font. */
+  [dir='rtl'] .latin {
+    font-family: var(--font-inter), Inter, system-ui, sans-serif;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--surface); }
   ::-webkit-scrollbar-thumb {
@@ -89,6 +117,25 @@
     background-size: 24px 24px;
   }
 
+  /* ── Subtle film grain — adds tactile depth over flat surfaces ── */
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+
+  /* ── Mesh gradient — layered brand-tinted glow for hero/feature surfaces ── */
+  .mesh-bg {
+    background-image:
+      radial-gradient(at 18% 22%, rgba(189, 242, 202, 0.35) 0px, transparent 45%),
+      radial-gradient(at 82% 12%, rgba(128, 166, 137, 0.22) 0px, transparent 42%),
+      radial-gradient(at 68% 78%, rgba(189, 242, 202, 0.28) 0px, transparent 48%);
+  }
+
   /* ── Layout ── */
   .section-container {
     max-width: 1080px;
@@ -101,100 +148,6 @@
   .page-section {
     padding-top: 5rem;
     padding-bottom: 5rem;
-  }
-
-  /* ── Flip Card 3D ── */
-
-  /*
-    Perspective lives on the outer shell so sibling cards don't
-    share the same perspective context and distort each other.
-  */
-  .flip-card {
-    perspective: 1100px;
-  }
-  .flip-card-inner {
-    transform-style: preserve-3d;
-    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-  }
-  /* Desktop pointer devices: CSS hover handles the flip with zero JS */
-  @media (hover: hover) and (pointer: fine) {
-    .flip-card:hover .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-  }
-  /* Touch / click: JS toggles .is-flipped */
-  .flip-card-inner.is-flipped {
-    transform: rotateY(180deg);
-    animation: none; /* cancel any in-progress peek immediately */
-  }
-  /* Each face: hide its reverse side while the other is showing */
-  .flip-face {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-  /* Back face sits pre-rotated so it appears correct after the parent flips */
-  .flip-face-back {
-    transform: rotateY(180deg);
-  }
-  /* Reduced-motion card: cross-fade instead of rotate */
-  .flip-fade-face {
-    transition: opacity 0.35s ease;
-  }
-
-  /*
-    ── Mobile flip affordance ──────────────────────────────────────────────────
-
-    On touch devices (no hover pointer) users have no hover cue, so the card
-    performs a single brief "peek" tilt on load — lifting just enough to reveal
-    a sliver of the dark back face. The card shows users exactly what will
-    happen before they tap.
-
-    Anatomy:
-      0%  → card at rest (rotateY 0°)
-      38% → lifted 22° — back-face edge becomes visible at card right
-      58% → slight settle at 17° — elastic feel
-      100%→ returns to 0°
-
-    Delay is set per-card via the --peek-delay CSS custom property (set as
-    inline style in JSX), staggering the peeks so they cascade across the grid
-    rather than firing simultaneously.
-  */
-  @keyframes cardPeek {
-    0%   { transform: rotateY(0deg);  }
-    38%  { transform: rotateY(22deg); }
-    58%  { transform: rotateY(17deg); }
-    100% { transform: rotateY(0deg);  }
-  }
-
-  /*
-    Apply only on primary touch devices — no hover, coarse pointer.
-
-    :not(.is-flipped)  — don't animate while the card is showing the back face
-    :not(.peek-done)   — JS adds this class on animationend / animationcancel /
-                         first tap so the peek fires ONCE and never replays.
-  */
-  @media (hover: none) and (pointer: coarse) {
-    .flip-card-inner:not(.is-flipped):not(.peek-done) {
-      animation: cardPeek 0.88s cubic-bezier(0.22, 1, 0.36, 1)
-                 var(--peek-delay, 0.9s) 1 both;
-    }
-  }
-
-  /*
-    ── Device-contextual flip hint copy ────────────────────────────────────────
-
-    Two spans sit inside the hint row. CSS shows only the correct one based on
-    whether the primary pointer device supports hover. No JS, no hydration
-    mismatch — the server renders both, CSS toggles visibility.
-  */
-  @media (hover: hover) {
-    /* Hover-capable device (desktop/trackpad): show "Hover" text */
-    .flip-hint-touch { display: none; }
-  }
-  @media (hover: none) {
-    /* Touch device: show "Tap to flip", hide "Hover" text */
-    .flip-hint-hover { display: none; }
   }
 
   /* ── Logo card entrance ── */
@@ -231,12 +184,6 @@
   /* Disable logo entrance animation */
   .logo-card-animate {
     opacity: 1;
-    animation: none;
-  }
-
-  /* Disable 3D flip and mobile peek — cross-fade fallback handled in JS */
-  .flip-card-inner {
-    transition: none;
     animation: none;
   }
 

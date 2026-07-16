@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import Providers from '@/components/providers/Providers';
+import { Inter, IBM_Plex_Sans_Arabic } from 'next/font/google';
+import { notFound } from 'next/navigation';
+import { NextIntlClientProvider } from 'next-intl';
+import { getTranslations, getMessages, setRequestLocale } from 'next-intl/server';
+import { routing, type Locale } from '@/i18n/routing';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import './globals.css';
+import '../globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,54 +15,89 @@ const inter = Inter({
   weight: ['400', '500', '600', '700', '800'],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Shady Gamal — Front-End Developer',
-    template: '%s | Shady Gamal',
-  },
-  description:
-    'Front-End Developer at Blue Ribbon. React, Next.js, Tailwind CSS. UI/UX background, Google UX Certified. Building polished web products with strong design thinking. Based in Egypt, available worldwide.',
-  keywords: [
-    'Front-End Developer', 'React Developer', 'Next.js Developer',
-    'TypeScript', 'UI Developer', 'SaaS Frontend', 'Design Systems',
-  ],
-  authors: [{ name: 'Shady Gamal' }],
-  creator: 'Shady Gamal',
-  icons: {
-    // SVG favicon — modern browsers (Chrome 80+, Firefox, Edge, Safari 12+)
-    // Scales perfectly from 16px to any size from a single file.
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
-    // app/icon.tsx auto-generates /icon.png (32×32) as PNG fallback.
-    // app/apple-icon.tsx auto-generates /apple-icon.png (180×180).
-  },
-  // Tints the browser chrome / address bar on mobile to match brand
-  other: { 'theme-color': '#18261A' },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    title: 'Shady Gamal — Front-End Developer',
-    description: 'Front-End Developer crafting polished digital products with strong UI thinking.',
-    siteName: 'Shady Gamal',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Shady Gamal — Front-End Developer',
-    description: 'Front-End Developer crafting polished digital products with strong UI thinking.',
-  },
-  robots: { index: true, follow: true },
-};
+const plexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic'],
+  variable: '--font-arabic',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// Pre-render every locale at build time.
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+
+  return {
+    metadataBase: new URL('https://shadygamal.com'),
+    title: {
+      default: t('defaultTitle'),
+      template: `%s | ${t('name')}`,
+    },
+    description: t('description'),
+    keywords: [
+      'Front-End Developer', 'React Developer', 'Next.js Developer',
+      'TypeScript', 'UI Developer', 'SaaS Frontend', 'Design Systems',
+    ],
+    authors: [{ name: t('name') }],
+    creator: t('name'),
+    icons: {
+      icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    },
+    other: { 'theme-color': '#18261A' },
+    alternates: {
+      canonical: locale === routing.defaultLocale ? '/' : `/${locale}`,
+      languages: { en: '/', ar: '/ar' },
+    },
+    openGraph: {
+      type: 'website',
+      locale: locale === 'ar' ? 'ar_EG' : 'en_US',
+      title: t('defaultTitle'),
+      description: t('ogDescription'),
+      siteName: t('name'),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('defaultTitle'),
+      description: t('ogDescription'),
+    },
+    robots: { index: true, follow: true },
+  };
+}
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!routing.locales.includes(locale as Locale)) {
+    notFound();
+  }
+
+  // Enable static rendering for this locale.
+  setRequestLocale(locale);
+
+  const messages = await getMessages();
+  const dir = locale === 'ar' ? 'rtl' : 'ltr';
+
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="bg-white text-[#1d1d1f] antialiased">
-        <AppRouterCacheProvider>
-          <Providers>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </Providers>
-        </AppRouterCacheProvider>
+    <html lang={locale} dir={dir} className={`${inter.variable} ${plexArabic.variable}`}>
+      <body className="bg-white text-[#0D0D0D] antialiased">
+        <NextIntlClientProvider messages={messages}>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
