@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 
 interface FormState {
   name: string;
@@ -15,12 +14,34 @@ interface FormState {
 const INITIAL: FormState = { name: '', email: '', subject: '', message: '' };
 type Status = 'idle' | 'loading' | 'success';
 
+const fieldBase =
+  'w-full rounded-[9px] bg-white border border-[rgba(24,38,26,0.08)] px-3.5 py-2.5 text-[0.9375rem] text-[#0D0D0D] ' +
+  'placeholder:text-[rgba(13,13,13,0.32)] outline-none transition-colors ' +
+  'hover:border-[#80A689] focus:border-[#18261A] focus:ring-2 focus:ring-[#BDF2CA]/50';
+
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="flex flex-col gap-1.5">
+      <span className="text-[0.75rem] font-medium text-[#3a5c3e]">{label}</span>
+      {children}
+    </label>
+  );
+}
+
 export default function ContactForm() {
+  const t = useTranslations('contact.form');
   const [form, setForm] = useState<FormState>(INITIAL);
   const [status, setStatus] = useState<Status>('idle');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,16 +69,14 @@ export default function ContactForm() {
             </svg>
           </div>
           <div>
-            <h3 className="text-[1rem] font-semibold text-[#0D0D0D] mb-1">Message received.</h3>
-            <p className="text-[0.875rem] text-[#3a5c3e] leading-relaxed">
-              Thanks for reaching out. I review every message personally and respond within 24–48 hours.
-            </p>
+            <h3 className="text-[1rem] font-semibold text-[#0D0D0D] mb-1">{t('successTitle')}</h3>
+            <p className="text-[0.875rem] text-[#3a5c3e] leading-relaxed">{t('successBody')}</p>
           </div>
           <button
             onClick={() => setStatus('idle')}
             className="text-[0.8125rem] text-[#80A689] hover:text-[#3a5c3e] transition-colors"
           >
-            Send another message
+            {t('sendAnother')}
           </button>
         </motion.div>
       ) : (
@@ -71,34 +90,53 @@ export default function ContactForm() {
           className="surface-card p-6 md:p-8 flex flex-col gap-4"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <TextField label="Full name" name="name" value={form.name}
-              onChange={handleChange} required fullWidth
-              inputProps={{ autoComplete: 'name', placeholder: 'Alex Johnson' }} />
-            <TextField label="Email" name="email" type="email" value={form.email}
-              onChange={handleChange} required fullWidth
-              inputProps={{ autoComplete: 'email', placeholder: 'alex@company.com' }} />
+            <Field label={t('name')}>
+              <input
+                name="name" value={form.name} onChange={handleChange} required
+                autoComplete="name" placeholder={t('namePlaceholder')} className={fieldBase}
+              />
+            </Field>
+            <Field label={t('email')}>
+              <input
+                type="email" name="email" value={form.email} onChange={handleChange} required
+                autoComplete="email" placeholder={t('emailPlaceholder')} className={`latin ${fieldBase}`} dir="ltr"
+              />
+            </Field>
           </div>
 
-          <TextField label="Subject" name="subject" value={form.subject}
-            onChange={handleChange} required fullWidth
-            inputProps={{ placeholder: 'Project enquiry / Collaboration / Full-time role' }} />
+          <Field label={t('subject')}>
+            <input
+              name="subject" value={form.subject} onChange={handleChange} required
+              placeholder={t('subjectPlaceholder')} className={fieldBase}
+            />
+          </Field>
 
-          <TextField label="Message" name="message" value={form.message}
-            onChange={handleChange} required fullWidth multiline rows={5}
-            inputProps={{ placeholder: "Tell me about your project, timeline, and what you're looking for..." }} />
+          <Field label={t('message')}>
+            <textarea
+              name="message" value={form.message} onChange={handleChange} required rows={5}
+              placeholder={t('messagePlaceholder')} className={`${fieldBase} resize-y min-h-[120px]`}
+            />
+          </Field>
 
           <div className="flex items-center justify-between gap-4 pt-1">
             <p className="text-[0.75rem] text-[#80A689]">
-              Response within <span className="text-[#3a5c3e] font-medium">24–48 hours</span>
+              {t('responseTime')}{' '}
+              <span className="text-[#3a5c3e] font-medium">{t('responseWindow')}</span>
             </p>
-            <Button type="submit" variant="contained" disabled={status === 'loading'} sx={{ minWidth: 130 }}>
+            <button
+              type="submit"
+              disabled={status === 'loading'}
+              className="min-w-[130px] px-5 py-2.5 rounded-[9px] text-[0.875rem] font-medium text-white bg-[#18261A]
+                         hover:bg-[#243d27] active:scale-[0.98] transition-all shadow-sm shadow-[rgba(24,38,26,0.2)]
+                         disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+            >
               {status === 'loading' ? (
                 <span className="flex items-center gap-2">
                   <span className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Sending…
+                  {t('sending')}
                 </span>
-              ) : 'Send Message'}
-            </Button>
+              ) : t('send')}
+            </button>
           </div>
         </motion.form>
       )}

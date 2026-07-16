@@ -1,12 +1,13 @@
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
-const NAV = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/skills', label: 'Skills' },
-  { href: '/contact', label: 'Contact' },
-];
+const NAV_HREFS = [
+  { href: '/', key: 'home' },
+  { href: '/about', key: 'about' },
+  { href: '/projects', key: 'projects' },
+  { href: '/skills', key: 'skills' },
+  { href: '/contact', key: 'contact' },
+] as const;
 
 const SOCIAL = [
   {
@@ -30,6 +31,8 @@ const SOCIAL = [
 ];
 
 export default function Footer() {
+  const t = useTranslations('footer');
+  const tn = useTranslations('nav');
   return (
     <footer className="border-t border-[rgba(24,38,26,0.07)] mt-16">
       <div className="max-w-[1080px] mx-auto px-6 py-10">
@@ -38,31 +41,31 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="mb-3">
-              <span className="font-semibold text-[0.9375rem] text-[#0D0D0D] tracking-[-0.022em] select-none">
+              <span className="latin font-semibold text-[0.9375rem] text-[#0D0D0D] tracking-[-0.022em] select-none">
                 Shady<span className="text-[#80A689] font-bold mx-[5px]">·</span>Gamal
               </span>
             </div>
             <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.07em] mb-2">
-              Front-End Developer
+              {t('role')}
             </p>
             <p className="text-[0.8125rem] text-[#3a5c3e] leading-relaxed">
-              Crafting polished digital products with strong UI thinking.
+              {t('tagline')}
             </p>
           </div>
 
           {/* Nav */}
           <div>
             <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-3">
-              Pages
+              {t('pages')}
             </p>
             <div className="flex flex-col gap-1.5">
-              {NAV.map((link) => (
+              {NAV_HREFS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className="text-[0.8125rem] text-[#3a5c3e] hover:text-[#18261A] transition-colors w-fit"
                 >
-                  {link.label}
+                  {tn(link.key)}
                 </Link>
               ))}
             </div>
@@ -71,11 +74,11 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-3">
-              Contact
+              {t('contact')}
             </p>
             <a
               href="mailto:shaadygamal@gmail.com"
-              className="text-[0.8125rem] text-[#3a5c3e] hover:text-[#18261A] transition-colors block mb-3"
+              className="latin text-[0.8125rem] text-[#3a5c3e] hover:text-[#18261A] transition-colors block mb-3"
             >
               shaadygamal@gmail.com
             </a>
@@ -98,24 +101,24 @@ export default function Footer() {
           {/* Status */}
           <div>
             <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-3">
-              Status
+              {t('status')}
             </p>
             <div className="flex items-center gap-2 mb-1">
               <span className="w-1.5 h-1.5 bg-[#80A689] rounded-full animate-pulse" />
-              <span className="text-[0.8125rem] text-[#18261A] font-medium">Available</span>
+              <span className="text-[0.8125rem] text-[#18261A] font-medium">{t('available')}</span>
             </div>
             <p className="text-[0.75rem] text-[#80A689] leading-snug">
-              Open to new projects and full-time roles.
+              {t('availableNote')}
             </p>
           </div>
         </div>
 
         <div className="pt-6 border-t border-[rgba(24,38,26,0.06)] flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-[0.75rem] text-[#80A689]">
-            © {new Date().getFullYear()} Shady Gamal. All rights reserved.
+            {t('rights', { year: new Date().getFullYear() })}
           </p>
-          <p className="text-[0.75rem] text-[#80A689]">
-            Next.js · Tailwind CSS · Framer Motion · MUI
+          <p className="latin text-[0.75rem] text-[#80A689]">
+            {t('builtWith')}
           </p>
         </div>
       </div>

@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { motion, useReducedMotion } from 'framer-motion';
+import { Link } from '@/i18n/navigation';
 
 const stagger = {
   hidden: {},
@@ -15,20 +16,24 @@ const up = {
 const STACK = ['React', 'Next.js', 'TypeScript', 'Tailwind', 'Framer Motion'];
 
 export default function Hero() {
+  const t = useTranslations('home.hero');
   const shouldReduce = useReducedMotion();
   const loop = shouldReduce ? 0 : Infinity;
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
+    <section className="grain relative min-h-screen flex items-center overflow-hidden bg-white">
+      {/* Layered mesh gradient — bolder, brand-tinted depth */}
+      <div className="absolute inset-0 mesh-bg pointer-events-none" aria-hidden />
+
       {/* Dot grid */}
-      <div className="absolute inset-0 dot-grid opacity-100 pointer-events-none" aria-hidden />
+      <div className="absolute inset-0 dot-grid opacity-70 pointer-events-none" aria-hidden />
 
       {/* Soft mint wash */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 62% 40%, rgba(189,242,202,0.28) 0%, transparent 70%)',
+            'radial-gradient(ellipse 80% 60% at 62% 40%, rgba(189,242,202,0.22) 0%, transparent 70%)',
         }}
         aria-hidden
       />
@@ -50,7 +55,7 @@ export default function Hero() {
             <motion.div variants={up} className="mb-7">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[0.75rem] font-medium text-[#18261A] border border-[rgba(24,38,26,0.12)] bg-[#BDF2CA]/35 shadow-sm">
                 <span className="w-1.5 h-1.5 bg-[#80A689] rounded-full animate-pulse" />
-                Available for new projects
+                {t('badge')}
               </span>
             </motion.div>
 
@@ -59,7 +64,7 @@ export default function Hero() {
               variants={up}
               className="text-[clamp(2.4rem,4.8vw,3.75rem)] font-bold tracking-[-0.035em] leading-[1.06] text-[#0D0D0D] mb-5"
             >
-              Building polished
+              {t('headlineLine1')}
               <br />
               <span
                 style={{
@@ -69,7 +74,7 @@ export default function Hero() {
                   backgroundClip: 'text',
                 }}
               >
-                web products.
+                {t('headlineHighlight')}
               </span>
             </motion.h1>
 
@@ -78,9 +83,7 @@ export default function Hero() {
               variants={up}
               className="text-[1rem] text-[#3a5c3e] leading-[1.7] max-w-md mb-8"
             >
-              Production experience shipping responsive interfaces, translating
-              design into code, and building clean, scalable frontend systems
-              with React and Next.js.
+              {t('subcopy')}
             </motion.p>
 
             {/* CTAs */}
@@ -91,8 +94,8 @@ export default function Hero() {
                   whileTap={{ scale: 0.97 }}
                   className="flex items-center gap-2 px-5 py-2.5 bg-[#18261A] text-white font-medium rounded-xl text-[0.875rem] transition-colors shadow-sm shadow-[rgba(24,38,26,0.2)]"
                 >
-                  View My Work
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {t('viewWork')}
+                  <svg className="w-3.5 h-3.5 rtl:-scale-x-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
                 </motion.button>
@@ -104,7 +107,7 @@ export default function Hero() {
                   whileTap={{ scale: 0.97 }}
                   className="flex items-center gap-1.5 px-5 py-2.5 text-[#18261A] font-medium rounded-xl text-[0.875rem] border border-[rgba(24,38,26,0.14)] bg-white hover:bg-[#f7faf7] transition-colors shadow-sm"
                 >
-                  Download CV
+                  {t('downloadCV')}
                   <svg className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
                   </svg>
@@ -140,13 +143,13 @@ export default function Hero() {
 
             {/* Stack strip */}
             <motion.div variants={up} className="flex flex-wrap items-center gap-2">
-              <span className="text-[0.6875rem] text-[#80A689] uppercase tracking-[0.1em] font-medium mr-1">
-                Stack
+              <span className="text-[0.6875rem] text-[#80A689] uppercase tracking-[0.1em] font-medium me-1">
+                {t('stackLabel')}
               </span>
               {STACK.map((tech) => (
                 <span
                   key={tech}
-                  className="px-2.5 py-1 text-[0.75rem] font-medium text-[#3a5c3e] bg-[#F2F2F2] border border-[rgba(24,38,26,0.08)] rounded-full"
+                  className="latin px-2.5 py-1 text-[0.75rem] font-medium text-[#3a5c3e] bg-[#F2F2F2] border border-[rgba(24,38,26,0.08)] rounded-full"
                 >
                   {tech}
                 </span>

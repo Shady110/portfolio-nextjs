@@ -1,19 +1,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, usePathname } from '@/i18n/navigation';
+import LanguageToggle from './LanguageToggle';
 
-const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/skills', label: 'Skills' },
-  { href: '/contact', label: 'Contact' },
-];
+const NAV_HREFS = [
+  { href: '/', key: 'home' },
+  { href: '/about', key: 'about' },
+  { href: '/projects', key: 'projects' },
+  { href: '/skills', key: 'skills' },
+  { href: '/contact', key: 'contact' },
+] as const;
 
 export default function Navbar() {
+  const t = useTranslations('nav');
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
@@ -26,7 +28,7 @@ export default function Navbar() {
       requestAnimationFrame(() => {
         setScrolled((prev) => {
           const next = window.scrollY > 20;
-          return prev === next ? prev : next; // skip re-render if unchanged
+          return prev === next ? prev : next;
         });
         ticking = false;
       });
@@ -52,14 +54,14 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="group flex-shrink-0">
-          <span className="font-semibold text-[0.9375rem] text-[#0D0D0D] tracking-[-0.022em] group-hover:opacity-70 transition-opacity select-none">
+          <span className="latin font-semibold text-[0.9375rem] text-[#0D0D0D] tracking-[-0.022em] group-hover:opacity-70 transition-opacity select-none">
             Shady<span className="text-[#80A689] font-bold mx-[5px]">·</span>Gamal
           </span>
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-0.5">
-          {NAV_LINKS.map((link) => {
+          {NAV_HREFS.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
@@ -76,7 +78,7 @@ export default function Navbar() {
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.38 }}
                   />
                 )}
-                <span className="relative z-10">{link.label}</span>
+                <span className="relative z-10">{t(link.key)}</span>
               </Link>
             );
           })}
@@ -86,15 +88,16 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <span className="flex items-center gap-1.5 text-[0.75rem] text-[#80A689]">
             <span className="w-1.5 h-1.5 bg-[#80A689] rounded-full animate-pulse" />
-            Available
+            {t('available')}
           </span>
+          <LanguageToggle />
           <a href="/Shady-Gamal-CV.pdf" target="_blank" rel="noopener noreferrer">
             <motion.button
               whileHover={{ scale: 1.02, backgroundColor: '#f7faf7' }}
               whileTap={{ scale: 0.97 }}
               className="px-3.5 py-1.5 text-[0.8125rem] font-medium text-[#18261A] border border-[rgba(24,38,26,0.18)] rounded-lg bg-white/60 hover:bg-[#f7faf7] transition-colors"
             >
-              Resume
+              {t('resume')}
             </motion.button>
           </a>
           <Link href="/contact">
@@ -103,24 +106,27 @@ export default function Navbar() {
               whileTap={{ scale: 0.97 }}
               className="px-4 py-1.5 text-[0.8125rem] font-medium text-white bg-[#18261A] rounded-lg transition-colors"
             >
-              Get in touch
+              {t('getInTouch')}
             </motion.button>
           </Link>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen((v) => !v)}
-          className="md:hidden p-1.5 rounded-lg text-[#80A689] hover:text-[#18261A] hover:bg-[#BDF2CA]/30 transition-colors"
-          aria-label="Toggle menu"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {mobileOpen
-              ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            }
-          </svg>
-        </button>
+        {/* Mobile controls */}
+        <div className="md:hidden flex items-center gap-2">
+          <LanguageToggle />
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            className="p-1.5 rounded-lg text-[#80A689] hover:text-[#18261A] hover:bg-[#BDF2CA]/30 transition-colors"
+            aria-label={t('toggleMenu')}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileOpen
+                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              }
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -134,7 +140,7 @@ export default function Navbar() {
             className="md:hidden overflow-hidden border-t border-[rgba(24,38,26,0.07)] bg-white/95 backdrop-blur-xl"
           >
             <div className="px-5 py-3 flex flex-col gap-0.5">
-              {NAV_LINKS.map((link) => (
+              {NAV_HREFS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -144,7 +150,7 @@ export default function Navbar() {
                       : 'text-[#3a5c3e] hover:text-[#18261A] hover:bg-[#BDF2CA]/25'
                   }`}
                 >
-                  {link.label}
+                  {t(link.key)}
                 </Link>
               ))}
               <a
@@ -153,13 +159,13 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="mt-1 px-3.5 py-2.5 text-center text-sm font-medium text-[#18261A] border border-[rgba(24,38,26,0.14)] rounded-lg hover:bg-[#F2F2F2] transition-colors"
               >
-                Download CV
+                {t('downloadCV')}
               </a>
               <Link
                 href="/contact"
                 className="mt-1 px-3.5 py-2.5 text-center text-sm font-medium text-white bg-[#18261A] rounded-lg"
               >
-                Get in touch
+                {t('getInTouch')}
               </Link>
             </div>
           </motion.div>

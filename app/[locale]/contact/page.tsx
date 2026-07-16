@@ -1,12 +1,17 @@
 import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import ContactForm from '@/components/contact/ContactForm';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  description:
-    "Let's build something together. Reach out for project enquiries, collaboration, or full-time opportunities.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'metadata.contact' });
+  return { title: t('title'), description: t('description') };
+}
 
 const SOCIAL = [
   {
@@ -41,20 +46,24 @@ const SOCIAL = [
   },
 ];
 
-const ENGAGEMENT_TYPES = [
-  { icon: '◎', label: 'SaaS & Product Teams', sub: 'Full-time or contract' },
-  { icon: '◈', label: 'Design System Work', sub: 'Architecture & implementation' },
-  { icon: '⬡', label: 'Consulting', sub: 'Performance, code review, audits' },
-  { icon: '⚡', label: 'Freelance Projects', sub: 'Fixed scope or ongoing' },
-];
+const ENGAGEMENT_ICONS = ['◎', '◈', '⬡', '⚡'];
 
-export default function ContactPage() {
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations('contact');
+  const engagementTypes = t.raw('engagement.types') as { label: string; sub: string }[];
+
   return (
     <>
       {/* Hero */}
       <section className="relative pt-32 pb-10 bg-white">
         <div
-          className="absolute top-0 left-1/3 w-[500px] h-[400px] pointer-events-none"
+          className="absolute top-0 start-1/3 w-[500px] h-[400px] pointer-events-none"
           style={{
             background: 'radial-gradient(circle, rgba(189,242,202,0.28) 0%, transparent 70%)',
             transform: 'translateY(-20%)',
@@ -64,24 +73,14 @@ export default function ContactPage() {
         <div className="section-container relative z-10">
           <AnimatedSection>
             <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-4">
-              Get In Touch
+              {t('hero.eyebrow')}
             </p>
             <h1 className="text-[clamp(2.4rem,5vw,4rem)] font-bold tracking-[-0.035em] text-[#0D0D0D] leading-[1.05] mb-4 max-w-xl">
-              Let&apos;s build{' '}
-              <span
-                style={{
-                  background: 'linear-gradient(135deg, #80A689, #18261A)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
-                something great.
-              </span>
+              {t('hero.titleLead')}{' '}
+              <span className="text-gradient">{t('hero.titleHighlight')}</span>
             </h1>
             <p className="text-[0.9375rem] text-[#3a5c3e] leading-relaxed max-w-lg">
-              I&apos;m selective about the work I take on — that&apos;s a feature, not a limitation.
-              When I commit to a project, it gets my full attention. Tell me what you&apos;re building.
+              {t('hero.body')}
             </p>
           </AnimatedSection>
         </div>
@@ -90,20 +89,19 @@ export default function ContactPage() {
       {/* Main */}
       <section className="section-container pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-
           {/* Left sidebar */}
           <div className="lg:col-span-2 flex flex-col gap-4">
-
             {/* Availability */}
             <AnimatedSection delay={0.04}>
               <div className="surface-card p-5">
                 <div className="flex items-center gap-2.5 mb-3">
                   <span className="w-2 h-2 bg-[#80A689] rounded-full animate-pulse flex-shrink-0" />
-                  <p className="text-[0.875rem] font-semibold text-[#0D0D0D]">Available now</p>
+                  <p className="text-[0.875rem] font-semibold text-[#0D0D0D]">
+                    {t('availability.title')}
+                  </p>
                 </div>
                 <p className="text-[0.8125rem] text-[#3a5c3e] leading-relaxed">
-                  Open to new projects starting in the next 2–4 weeks. I prefer longer engagements
-                  where I can make a meaningful impact.
+                  {t('availability.body')}
                 </p>
               </div>
             </AnimatedSection>
@@ -112,12 +110,14 @@ export default function ContactPage() {
             <AnimatedSection delay={0.08}>
               <div className="surface-card p-5">
                 <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-4">
-                  I work well with
+                  {t('engagement.title')}
                 </p>
                 <div className="flex flex-col gap-3">
-                  {ENGAGEMENT_TYPES.map((e) => (
+                  {engagementTypes.map((e, i) => (
                     <div key={e.label} className="flex items-center gap-2.5">
-                      <span className="text-sm text-[#80A689] w-4 flex-shrink-0">{e.icon}</span>
+                      <span className="text-sm text-[#80A689] w-4 flex-shrink-0">
+                        {ENGAGEMENT_ICONS[i]}
+                      </span>
                       <div>
                         <p className="text-[0.8125rem] font-medium text-[#0D0D0D] leading-tight">{e.label}</p>
                         <p className="text-[0.75rem] text-[#80A689]">{e.sub}</p>
@@ -132,7 +132,7 @@ export default function ContactPage() {
             <AnimatedSection delay={0.12}>
               <div className="surface-card p-5">
                 <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-4">
-                  Find me on
+                  {t('social.title')}
                 </p>
                 <div className="flex flex-col gap-3">
                   {SOCIAL.map((s) => (
@@ -147,8 +147,8 @@ export default function ContactPage() {
                         {s.icon}
                       </span>
                       <div>
-                        <p className="text-[0.75rem] text-[#80A689]">{s.label}</p>
-                        <p className="text-[0.8125rem] font-medium text-[#3a5c3e] group-hover:text-[#0D0D0D] transition-colors">
+                        <p className="latin text-[0.75rem] text-[#80A689]">{s.label}</p>
+                        <p className="latin text-[0.8125rem] font-medium text-[#3a5c3e] group-hover:text-[#0D0D0D] transition-colors">
                           {s.handle}
                         </p>
                       </div>

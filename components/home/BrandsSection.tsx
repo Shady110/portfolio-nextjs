@@ -2,7 +2,9 @@
 
 import { memo, useRef } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { useInView } from 'framer-motion';
+import { Link } from '@/i18n/navigation';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
 const BRANDS = [
@@ -13,13 +15,6 @@ const BRANDS = [
   { name: 'Flow',             logo: '/logos/flow.png',       square: false },
   { name: 'All Seasons MK',   logo: '/logos/allseasons.png', square: false },
   { name: 'Moldndie',         logo: '/logos/moldndie.png',   square: false },
-];
-
-const BULLETS = [
-  'Sports Club Platforms',
-  'Admin Dashboards',
-  'E-commerce Experiences',
-  'Landing Pages',
 ];
 
 // ─── Memoized card — never re-renders after initial paint ───────────────────
@@ -66,7 +61,7 @@ const LogoCard = memo(function LogoCard({
 
       {/* Name label */}
       <span
-        className="text-[0.625rem] font-medium tracking-tight text-center leading-snug
+        className="latin text-[0.625rem] font-medium tracking-tight text-center leading-snug
                    text-[rgba(13,13,13,0.35)] group-hover:text-[rgba(13,13,13,0.6)]
                    transition-colors duration-200"
       >
@@ -78,6 +73,9 @@ const LogoCard = memo(function LogoCard({
 
 // ─── Section ────────────────────────────────────────────────────────────────
 export default function BrandsSection() {
+  const t = useTranslations('home.brands');
+  const tc = useTranslations('common');
+  const bullets = t.raw('bullets') as string[];
   // Single IntersectionObserver for the entire grid (was 7 before).
   // `once: true` means the observer disconnects after first trigger — no
   // continuous scroll tracking, no per-frame callbacks.
@@ -93,24 +91,20 @@ export default function BrandsSection() {
           <AnimatedSection>
             <div className="max-w-[440px]">
               <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-4">
-                Selected Work
+                {t('eyebrow')}
               </p>
 
               <h2 className="text-[clamp(1.5rem,2.6vw,2rem)] font-bold tracking-[-0.03em] text-[#0D0D0D] leading-[1.15] mb-5">
-                Built for real businesses
-                <br className="hidden sm:block" />
-                across multiple industries
+                {t('title')}
               </h2>
 
               <p className="text-[0.9375rem] text-[#3a5c3e] leading-[1.72] mb-7">
-                I&apos;ve contributed to frontend products including dashboards, commerce
-                platforms, membership systems, and growth websites through real
-                production work.
+                {t('body')}
               </p>
 
               {/* Bullets */}
               <ul className="space-y-2.5 mb-9">
-                {BULLETS.map((b) => (
+                {bullets.map((b) => (
                   <li key={b} className="flex items-center gap-3">
                     <span
                       className="w-[5px] h-[5px] rounded-full flex-shrink-0"
@@ -125,14 +119,14 @@ export default function BrandsSection() {
               </ul>
 
               {/* CTA */}
-              <a
+              <Link
                 href="/about"
                 className="group inline-flex items-center gap-1.5 text-[0.875rem] font-semibold
                            text-[#18261A] hover:text-[#80A689] transition-colors duration-200"
               >
-                View Experience
+                {t('cta')}
                 <svg
-                  className="w-3.5 h-3.5 translate-x-0 group-hover:translate-x-0.5 transition-transform duration-200"
+                  className="w-3.5 h-3.5 translate-x-0 group-hover:translate-x-0.5 transition-transform duration-200 rtl:-scale-x-100"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -145,7 +139,7 @@ export default function BrandsSection() {
                     d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
                   />
                 </svg>
-              </a>
+              </Link>
             </div>
           </AnimatedSection>
 
@@ -177,7 +171,7 @@ export default function BrandsSection() {
               aria-hidden
             >
               <span className="text-[0.625rem] font-medium text-[rgba(24,38,26,0.18)] tracking-wide">
-                & more
+                {tc('andMore')}
               </span>
             </div>
           </div>

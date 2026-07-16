@@ -1,0 +1,474 @@
+{
+  "metadata": {
+    "name": "Shady Gamal",
+    "defaultTitle": "Shady Gamal — Front-End Developer",
+    "description": "Front-End Developer at Blue Ribbon. React, Next.js, Tailwind CSS. UI/UX background, Google UX Certified. Building polished web products with strong design thinking. Based in Egypt, available worldwide.",
+    "ogDescription": "Front-End Developer crafting polished digital products with strong UI thinking.",
+    "home": {
+      "title": "Shady Gamal — Front-End Developer",
+      "description": "Front-End Developer crafting polished digital products with strong UI thinking. Based in Egypt, available worldwide."
+    },
+    "about": {
+      "title": "About",
+      "description": "Front-End Developer with production experience across SaaS platforms, e-commerce, and dashboards. Design background, React/Next.js stack, Google UX certified."
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "Real production projects across SaaS platforms, full-stack commerce, agency work, and healthcare — with honest context on role, contributions, and business impact."
+    },
+    "skills": {
+      "title": "Skills",
+      "description": "React, Next.js, TypeScript, Tailwind — plus design systems, product thinking, and a Google UX Design professional certificate. Built through real production work."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Let's build something together. Reach out for project enquiries, collaboration, or full-time opportunities."
+    }
+  },
+
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact",
+    "available": "Available",
+    "resume": "Resume",
+    "getInTouch": "Get in touch",
+    "downloadCV": "Download CV",
+    "toggleMenu": "Toggle menu",
+    "switchToArabic": "التبديل إلى العربية",
+    "switchToEnglish": "Switch to English"
+  },
+
+  "footer": {
+    "role": "Front-End Developer",
+    "tagline": "Crafting polished digital products with strong UI thinking.",
+    "pages": "Pages",
+    "contact": "Contact",
+    "status": "Status",
+    "available": "Available",
+    "availableNote": "Open to new projects and full-time roles.",
+    "rights": "© {year} Shady Gamal. All rights reserved.",
+    "builtWith": "Next.js · Tailwind CSS · Framer Motion"
+  },
+
+  "common": {
+    "live": "Live",
+    "inProgress": "In Progress",
+    "viewCode": "View Code",
+    "code": "Code",
+    "source": "Source",
+    "private": "Private",
+    "privateRepo": "Private Repository",
+    "viewAll": "View all",
+    "details": "Details",
+    "current": "Current",
+    "andMore": "& more"
+  },
+
+  "home": {
+    "hero": {
+      "badge": "Available for new projects",
+      "headlineLine1": "Building polished",
+      "headlineHighlight": "web products.",
+      "subcopy": "Production experience shipping responsive interfaces, translating design into code, and building clean, scalable frontend systems with React and Next.js.",
+      "viewWork": "View My Work",
+      "downloadCV": "Download CV",
+      "stackLabel": "Stack"
+    },
+    "brands": {
+      "eyebrow": "Selected Work",
+      "title": "Built for real businesses across multiple industries",
+      "body": "I've contributed to frontend products including dashboards, commerce platforms, membership systems, and growth websites through real production work.",
+      "bullets": [
+        "Sports Club Platforms",
+        "Admin Dashboards",
+        "E-commerce Experiences",
+        "Landing Pages"
+      ],
+      "cta": "View Experience"
+    },
+    "featured": {
+      "eyebrow": "Selected Work",
+      "title": "Projects That",
+      "titleHighlight": "Shipped.",
+      "description": "Real production work across SaaS platforms, full-stack commerce, and agency operations.",
+      "viewAll": "View all"
+    },
+    "trust": {
+      "eyebrow": "Engineering Philosophy",
+      "title": "How I approach every piece of frontend work.",
+      "body": "Four values I hold to on every project — from a single reusable component to a full platform. Not rules. Just how I think.",
+      "principles": [
+        {
+          "label": "Design quality meets engineering discipline",
+          "body": "Great frontend work lives between the two. Clean code matters, but so does clarity, usability, and the attention to detail that users actually feel."
+        },
+        {
+          "label": "Build products users enjoy using",
+          "body": "I don't just ship screens — I ask whether the interface actually serves the user. Every decision is weighed against the experience, not just the spec."
+        },
+        {
+          "label": "Components that compose",
+          "body": "I build with reusability in mind from the first commit — clear APIs, consistent naming, and shared patterns that make future work faster."
+        },
+        {
+          "label": "Performance from the beginning",
+          "body": "Core Web Vitals, accessibility, and mobile performance are part of building — not bolted on after launch. Speed is part of the product."
+        }
+      ]
+    },
+    "skillsSnapshot": {
+      "eyebrow": "Capabilities",
+      "title": "The stack behind the work.",
+      "fullBreakdown": "Full breakdown"
+    },
+    "finalCta": {
+      "eyebrow": "Let's Build Something",
+      "title": "Ready to elevate your product?",
+      "body": "Whether you're building a product UI, need a polished frontend, or want a developer who understands design — I'm open to new work.",
+      "primary": "Start a Conversation",
+      "secondary": "See My Work First"
+    }
+  },
+
+  "about": {
+    "hero": {
+      "eyebrow": "About Me",
+      "titleLead": "Front-End Developer.",
+      "titleHighlight": "Product thinker.",
+      "paragraphs": [
+        "I build web interfaces for products that are actually used — dashboards, club management platforms, e-commerce systems, and growth tools. My work sits at the intersection of frontend engineering and product thinking.",
+        "I started with design before I wrote a line of code. That background shows up in how I approach every component — understanding why something needs to exist before building it, and knowing when the spec is wrong.",
+        "Good frontend work is invisible. It loads fast, behaves predictably, and never makes users think. That's the bar I hold my work to."
+      ]
+    },
+    "why": {
+      "eyebrow": "Why Teams Hire Me",
+      "title": "What I bring to every engagement.",
+      "cards": [
+        {
+          "title": "Product-minded Frontend",
+          "body": "I think in features and flows, not just components. Building an interface means understanding what it needs to accomplish — and asking the right questions when the brief doesn't add up."
+        },
+        {
+          "title": "Clean Execution",
+          "body": "Consistent naming, clear component APIs, no unnecessary abstraction. I write code with the next developer in mind — because clean code ships faster and stays maintainable."
+        },
+        {
+          "title": "Design Advantage",
+          "body": "I started with design before code. I catch usability gaps early, communicate fluently with designers, and build interfaces that feel considered — not just technically correct."
+        },
+        {
+          "title": "Real Business Context",
+          "body": "I've shipped into live products with real operators and real users. I understand that a daily-use admin panel has different requirements than a marketing page — and I build accordingly."
+        }
+      ]
+    },
+    "howIBuild": {
+      "eyebrow": "How I Build",
+      "title": "Four principles I don't compromise on.",
+      "principles": [
+        {
+          "label": "Clarity First",
+          "body": "Every component, prop name, and layout decision should be obvious. If something needs explaining, it needs rethinking."
+        },
+        {
+          "label": "Reusable by Default",
+          "body": "I write components with reuse in mind from the first commit — consistent APIs, predictable behaviour, no hidden dependencies."
+        },
+        {
+          "label": "Performance Matters",
+          "body": "Fast is a feature. Core Web Vitals, bundle awareness, and image optimisation are part of building — not a post-launch audit."
+        },
+        {
+          "label": "Details Build Trust",
+          "body": "Spacing, transitions, loading states, empty states. Product quality lives in the gaps between features."
+        }
+      ]
+    },
+    "sectors": {
+      "eyebrow": "Product Experience",
+      "title": "Sectors I've built real products for.",
+      "items": [
+        { "name": "Sports Platforms", "note": "Club management, membership ops, booking flows" },
+        { "name": "Admin Dashboards", "note": "Multi-role interfaces, analytics, permissions" },
+        { "name": "E-commerce", "note": "Storefronts, checkout flows, product catalogues" },
+        { "name": "Healthcare", "note": "Patient-facing UI, clarity-first design systems" },
+        { "name": "Marketing Sites", "note": "Conversion-focused landing pages, agency delivery" }
+      ]
+    },
+    "capabilities": {
+      "eyebrow": "Core Capabilities",
+      "title": "The tools I work with daily.",
+      "groups": [
+        { "label": "Frontend Stack", "items": ["React", "Next.js 15", "TypeScript", "Tailwind CSS", "Framer Motion"] },
+        { "label": "UI & Design", "items": ["Component Architecture", "Design Systems", "Responsive Layout", "Figma", "Accessibility"] },
+        { "label": "Tooling & Integration", "items": ["Git", "REST APIs", "Performance", "Node.js", "Google UX Certified"] }
+      ]
+    },
+    "timeline": {
+      "eyebrow": "Experience",
+      "titleLine1": "Two roles.",
+      "titleLine2": "Real products.",
+      "body": "One role shipping production interfaces. One role teaching others how to build them well. Both sharpen different things.",
+      "entries": {
+        "blue-ribbon": {
+          "period": "Dec 2024 – Present",
+          "role": "Front-End Developer",
+          "summary": "Production frontend work on sports club management platforms and multi-tenant dashboards — the kind of interfaces that real operators depend on every day.",
+          "responsibilities": [
+            "Built responsive interfaces across multiple club brands using React, Next.js, and Tailwind CSS",
+            "Converted Figma designs into production-ready components with high implementation fidelity",
+            "Integrated REST APIs and handled dynamic data rendering across club management modules",
+            "Worked within a multi-tenant architecture serving Kode Club, Ryze Clubs, O West Club, and Kayan Club",
+            "Contributed to product design and UX decisions — not just execution of the spec",
+            "Collaborated closely with designers and backend developers across the full delivery cycle"
+          ]
+        },
+        "kimit": {
+          "period": "Nov 2023 – Jun 2025",
+          "role": "Full Stack Mentor",
+          "summary": "Teaching and mentoring the next generation of developers — which demands a level of clarity and depth that shipping code alone rarely requires.",
+          "responsibilities": [
+            "Taught HTML, CSS, JavaScript, and React from first principles through to real-world application",
+            "Guided students through project-based learning — building and shipping actual products",
+            "Reviewed code with specific, actionable feedback focused on correctness and long-term maintainability",
+            "Explained full-stack concepts: frontend architecture, backend integration, and API design",
+            "Supported debugging sessions and reinforced strong development habits and best practices",
+            "Helped students understand end-to-end product development, not just isolated syntax"
+          ]
+        }
+      }
+    },
+    "cta": {
+      "title": "Want to work together?",
+      "body": "Open to full-time roles, remote opportunities, and product-focused work — anywhere I can make a meaningful contribution to the interface.",
+      "seeWork": "See My Work",
+      "getInTouch": "Get In Touch"
+    }
+  },
+
+  "skills": {
+    "hero": {
+      "eyebrow": "Capabilities",
+      "titleLead": "Not a list of buzzwords.",
+      "titleHighlight": "A working toolkit.",
+      "body": "Four areas that define how I contribute to product teams. Each one shaped by shipping real interfaces across SaaS platforms, e-commerce, dashboards, and growth products — not portfolio experiments."
+    },
+    "whatIBring": {
+      "eyebrow": "What I Bring to Product Teams",
+      "title": "Four areas. Each one backed by shipping real products."
+    },
+    "howIWork": {
+      "eyebrow": "How I Work",
+      "title": "The thinking behind the output.",
+      "items": [
+        {
+          "label": "Start with the problem, not the component",
+          "text": "I don't open an editor until I understand what the interface is actually solving. The spec tells me what to build. Understanding the user tells me how it should work."
+        },
+        {
+          "label": "Move fast, then make it right",
+          "text": "Getting something testable in front of people has real value. So does the code that lives in production for the next two years. I know when to push and when to be deliberate."
+        },
+        {
+          "label": "Own the seam",
+          "text": "The gap between design and code — or frontend and backend — is where problems live. I don't hand those off. I find out what's wrong and fix it."
+        }
+      ]
+    },
+    "foundations": {
+      "eyebrow": "Professional Foundations",
+      "title": "The education behind the work.",
+      "credentials": [
+        {
+          "badge": "UX",
+          "title": "Google UX Design Professional Certificate",
+          "issuer": "Google · Coursera",
+          "meta": "8-course professional program",
+          "detail": "Covers UX research, wireframing, prototyping, usability testing, and design systems end to end. Formalised the design thinking I apply daily — from information architecture to the micro-interactions that build product trust."
+        },
+        {
+          "badge": "FS",
+          "title": "Full Stack Development Diploma",
+          "issuer": "Kimit Innovation Technology",
+          "meta": "Intensive programme",
+          "detail": "Frontend architecture, backend fundamentals, API design, databases, and end-to-end product delivery. Where I bridged the gap between building UI and understanding the full system it sits inside."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Not sure if I'm the right fit?",
+      "body": "If your stack looks different or the role is unconventional — reach out. I learn fast and I'm honest about what I do and don't know.",
+      "button": "Let's Talk"
+    },
+    "categories": {
+      "core-stack": {
+        "label": "Core Stack",
+        "description": "The technologies I ship production code with daily."
+      },
+      "experience": {
+        "label": "Experience Includes",
+        "description": "Capabilities built from shipping real interfaces across SaaS, e-commerce, and dashboard products."
+      },
+      "collaboration": {
+        "label": "Collaboration",
+        "description": "How I work within product teams — across design, backend, and stakeholders."
+      },
+      "strengths": {
+        "label": "Strengths",
+        "description": "What consistently shows up in the work — and what teams notice."
+      }
+    }
+  },
+
+  "projects": {
+    "hero": {
+      "eyebrow": "Selected Work",
+      "titleLead": "Real projects.",
+      "titleHighlight": "Real production.",
+      "description": "Four distinct engagements across SaaS platforms, full-stack commerce, agency operations, and healthcare. Open any card for contributions and impact."
+    },
+    "card": {
+      "viewDetails": "View details",
+      "contributionsImpact": "Contributions & Impact",
+      "keyContributions": "Key Contributions",
+      "challenge": "Challenge",
+      "impact": "Impact",
+      "close": "Close"
+    },
+    "deliverables": {
+      "title": "Every engagement, delivered end to end",
+      "subtitle": "The work I take ownership of across a project.",
+      "items": [
+        "Frontend architecture",
+        "Design systems",
+        "Responsive UI",
+        "API integration",
+        "Product & UX decisions",
+        "Performance & a11y"
+      ]
+    },
+    "stat": {
+      "value": "4",
+      "label": "live production products",
+      "note": "shipped across SaaS, commerce, agency & healthcare"
+    },
+    "cta": {
+      "eyebrow": "Next Steps",
+      "title": "Have a project in mind?",
+      "description": "I take on a limited number of engagements at a time to ensure every project gets full attention.",
+      "primary": "Start a Conversation",
+      "secondary": "Learn About Me"
+    },
+    "items": {
+      "br-clubs": {
+        "type": "Multi-Tenant SaaS · Sports Club Management",
+        "category": "SaaS Platform",
+        "summary": "A multi-tenant web platform powering the full operational stack of sports clubs across Egypt. Built to serve multiple branded club instances — each with distinct teams and member bases — from a single scalable codebase. I worked across both engineering and product design on this platform.",
+        "roles": ["Front-End Engineer", "Product Designer"],
+        "contributions": [
+          "Built and maintained the club management dashboard across 3+ live club tenants",
+          "Architected multi-tenant frontend with per-brand customisation and isolated admin experiences",
+          "Shipped core product modules: facility booking, membership operations, class scheduling, and announcements",
+          "Designed and built admin permission systems and role-based access controls",
+          "Developed analytics dashboards surfacing operational data for club managers",
+          "Contributed to connected mobile app product experience and management panels",
+          "Drove UX improvements across key flows based on real operator feedback"
+        ],
+        "challenge": "Building one frontend codebase that adapts — visually and functionally — across multiple distinct club brands, each with their own staff, workflows, and customisation requirements, without fragmenting the architecture or creating maintenance overhead.",
+        "impact": "Live and actively used by Kode Club, Ryze Clubs, and O West Club. Kayan Club onboarding in progress. The platform demonstrates end-to-end production SaaS delivery with both engineering depth and product design ownership."
+      },
+      "moldndie": {
+        "type": "Commerce · Content · Courses Platform",
+        "category": "Full Stack",
+        "summary": "A hybrid digital platform combining e-commerce, course selling, and content publishing under one product ecosystem. Built end-to-end — from information architecture and UX design through to backend integration and payment processing — with Paymob handling Egyptian market transactions.",
+        "roles": ["Full Stack Engineer", "Product Designer"],
+        "contributions": [
+          "Designed and built the platform end-to-end: frontend, backend, and UX",
+          "Built the e-commerce storefront with product catalogue, cart, and full checkout flow",
+          "Integrated Paymob payment gateway for Egyptian market transactions",
+          "Developed course selling experience and editorial content / blog system",
+          "Designed responsive admin controls for product and content management",
+          "Owned the complete product structure from information architecture to live deployment"
+        ],
+        "challenge": "Combining three distinct product types — retail, courses, and editorial content — into a single coherent user experience without a fragmented UI or brittle codebase. Each surface needed its own interaction model while sharing a consistent design language.",
+        "impact": "A live, operational platform serving the Moldndie brand as a real commercial product. Demonstrates full-stack delivery capability with end-to-end technical and product ownership from zero to production."
+      },
+      "flow": {
+        "type": "Growth Agency · E-Commerce Enablement",
+        "category": "Agency / Startup",
+        "summary": "A growth agency helping Egyptian e-commerce brands improve their digital presence and sales performance. Co-founded, built, and technically operated — from the agency website through to client project delivery. I owned the technical direction and built every frontend output.",
+        "roles": ["Co-Founder", "Technical Lead"],
+        "contributions": [
+          "Co-founded and technically led a growth-focused agency serving e-commerce clients",
+          "Built the agency website with a conversion-focused landing page and lead generation UX",
+          "Delivered brand websites for clients including All Seasons MK",
+          "Owned technical direction, execution standards, and delivery quality across all projects",
+          "Built responsive, performance-optimised web experiences tailored to each client brief"
+        ],
+        "challenge": "Operating as both engineer and business owner simultaneously — setting technical standards, managing client relationships, and ensuring every deliverable reflected the quality of the agency's own brand.",
+        "impact": "A real operating business with live client work and delivered projects. Demonstrates founder-level ownership, independent decision-making, and the ability to ship frontend products from client brief through to handoff."
+      },
+      "med-eg": {
+        "type": "Healthcare Digital Platform",
+        "category": "Healthcare",
+        "summary": "A healthcare platform in active development, built to modernise digital workflows in the medical space. Healthcare UX demands an unusually high bar for clarity, trust, and consistency — every interface decision is made with that context in mind.",
+        "roles": ["Front-End Developer", "Product Contributor"],
+        "contributions": [
+          "Building scalable frontend architecture for a multi-role healthcare platform",
+          "Designing accessible, trust-focused UX suited to a sensitive medical domain",
+          "Developing patient-facing and admin interfaces with strong information hierarchy",
+          "Implementing performance-optimised, responsive layouts across all breakpoints",
+          "Establishing component patterns and naming conventions for long-term maintainability"
+        ],
+        "challenge": "Healthcare interfaces carry real user consequences — ambiguity in layout or copy has direct implications for the people relying on them. Every component decision has to be deliberate, clear, and auditable under scrutiny.",
+        "impact": "Currently in active development. Will serve as a modernised digital layer for healthcare access in the Egyptian market, built with scalable frontend architecture and a strong emphasis on usability in a high-stakes domain."
+      }
+    }
+  },
+
+  "contact": {
+    "hero": {
+      "eyebrow": "Get In Touch",
+      "titleLead": "Let's build",
+      "titleHighlight": "something great.",
+      "body": "I'm selective about the work I take on — that's a feature, not a limitation. When I commit to a project, it gets my full attention. Tell me what you're building."
+    },
+    "availability": {
+      "title": "Available now",
+      "body": "Open to new projects starting in the next 2–4 weeks. I prefer longer engagements where I can make a meaningful impact."
+    },
+    "engagement": {
+      "title": "I work well with",
+      "types": [
+        { "label": "SaaS & Product Teams", "sub": "Full-time or contract" },
+        { "label": "Design System Work", "sub": "Architecture & implementation" },
+        { "label": "Consulting", "sub": "Performance, code review, audits" },
+        { "label": "Freelance Projects", "sub": "Fixed scope or ongoing" }
+      ]
+    },
+    "social": {
+      "title": "Find me on"
+    },
+    "form": {
+      "name": "Full name",
+      "namePlaceholder": "Alex Johnson",
+      "email": "Email",
+      "emailPlaceholder": "alex@company.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "Project enquiry / Collaboration / Full-time role",
+      "message": "Message",
+      "messagePlaceholder": "Tell me about your project, timeline, and what you're looking for...",
+      "responseTime": "Response within",
+      "responseWindow": "24–48 hours",
+      "send": "Send Message",
+      "sending": "Sending…",
+      "successTitle": "Message received.",
+      "successBody": "Thanks for reaching out. I review every message personally and respond within 24–48 hours.",
+      "sendAnother": "Send another message"
+    }
+  }
+}
