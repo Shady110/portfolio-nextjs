@@ -1,9 +1,7 @@
 'use client';
 
-import { memo, useRef } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useInView } from 'framer-motion';
 import { Link } from '@/i18n/navigation';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
@@ -17,167 +15,116 @@ const BRANDS = [
   { name: 'Moldndie',         logo: '/logos/moldndie.png',   square: false },
 ];
 
-// ─── Memoized card — never re-renders after initial paint ───────────────────
-// Stagger is pure CSS (animation-delay), so no JS runs per card on scroll.
-// Hover opacity is CSS group-hover — zero JS, compositor-only.
-const LogoCard = memo(function LogoCard({
-  name,
-  logo,
-  square,
-  index,
-  visible,
-}: {
-  name: string;
-  logo: string;
-  square: boolean;
-  index: number;
-  visible: boolean;
-}) {
+// Duplicated once so `.animate-marquee` (translateX(-50%)) loops seamlessly.
+const MARQUEE_BRANDS = [...BRANDS, ...BRANDS];
+
+function LogoItem({ brand, hidden }: { brand: (typeof BRANDS)[number]; hidden?: boolean }) {
   return (
     <div
-      className={`group relative flex flex-col items-center justify-center gap-2.5 p-4 aspect-square
-                  border border-[rgba(24,38,26,0.07)] rounded-2xl bg-white
-                  hover:border-[rgba(24,38,26,0.13)] hover:bg-[#FAFAFA]
-                  transition-[border-color,background-color] duration-200 cursor-default select-none
-                  ${visible ? 'logo-card-animate' : ''}`}
-      style={visible ? { animationDelay: `${index * 0.055}s` } : undefined}
+      className="group flex flex-col items-center gap-2.5 px-8 shrink-0 cursor-default select-none"
+      aria-hidden={hidden}
     >
-      {/* Logo mark — opacity via CSS group-hover, no JS handlers */}
-      <div className="flex items-center justify-center flex-1 w-full">
+      <div className="h-9 flex items-center justify-center">
         <Image
-          src={logo}
-          alt={name}
-          width={square ? 56 : 96}
-          height={56}
+          src={brand.logo}
+          alt={brand.name}
+          width={brand.square ? 40 : 84}
+          height={40}
           className={[
-            square
-              ? 'w-9 h-9 object-contain'
-              : 'h-6 w-auto max-w-[84px] object-contain',
-            'opacity-25 group-hover:opacity-60 transition-opacity duration-200',
+            brand.square ? 'h-9 w-9' : 'h-6 w-auto max-w-[84px]',
+            'object-contain opacity-30 group-hover:opacity-70 transition-opacity duration-200',
           ].join(' ')}
           style={{ filter: 'brightness(0) saturate(0)' }}
         />
       </div>
-
-      {/* Name label */}
       <span
-        className="latin text-[0.625rem] font-medium tracking-tight text-center leading-snug
+        className="text-[0.625rem] font-medium tracking-tight text-center leading-snug
                    text-[rgba(13,13,13,0.35)] group-hover:text-[rgba(13,13,13,0.6)]
-                   transition-colors duration-200"
+                   transition-colors duration-200 whitespace-nowrap"
       >
-        {name}
+        {brand.name}
       </span>
     </div>
   );
-});
+}
 
-// ─── Section ────────────────────────────────────────────────────────────────
 export default function BrandsSection() {
   const t = useTranslations('home.brands');
-  const tc = useTranslations('common');
   const bullets = t.raw('bullets') as string[];
-  // Single IntersectionObserver for the entire grid (was 7 before).
-  // `once: true` means the observer disconnects after first trigger — no
-  // continuous scroll tracking, no per-frame callbacks.
-  const gridRef = useRef<HTMLDivElement>(null);
-  const gridVisible = useInView(gridRef, { once: true, amount: 0.15 });
 
   return (
-    <section className="py-20 bg-white border-y border-[rgba(24,38,26,0.07)]">
+    <section className="py-20 bg-white border-y border-[rgba(24,38,26,0.07)] overflow-hidden">
       <div className="section-container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+        <AnimatedSection>
+          <div className="max-w-xl mx-auto text-center">
+            <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-4">
+              {t('eyebrow')}
+            </p>
 
-          {/* ── Left: copy ── */}
-          <AnimatedSection>
-            <div className="max-w-[440px]">
-              <p className="text-[0.6875rem] font-semibold text-[#80A689] uppercase tracking-[0.1em] mb-4">
-                {t('eyebrow')}
-              </p>
+            <h2 className="text-[clamp(1.5rem,2.6vw,2rem)] font-bold tracking-[-0.03em] text-[#0D0D0D] leading-[1.15] mb-5">
+              {t('title')}
+            </h2>
 
-              <h2 className="text-[clamp(1.5rem,2.6vw,2rem)] font-bold tracking-[-0.03em] text-[#0D0D0D] leading-[1.15] mb-5">
-                {t('title')}
-              </h2>
+            <p className="text-[0.9375rem] text-[#3a5c3e] leading-[1.72] mb-8">
+              {t('body')}
+            </p>
 
-              <p className="text-[0.9375rem] text-[#3a5c3e] leading-[1.72] mb-7">
-                {t('body')}
-              </p>
-
-              {/* Bullets */}
-              <ul className="space-y-2.5 mb-9">
-                {bullets.map((b) => (
-                  <li key={b} className="flex items-center gap-3">
+            {/* Bullets */}
+            <ul className="flex flex-wrap items-center justify-center gap-2.5 mb-8">
+              {bullets.map((b) => (
+                <li key={b}>
+                  <span
+                    className="inline-flex items-center gap-2 rounded-full border border-[rgba(24,38,26,0.12)]
+                               px-3.5 py-1.5 text-[0.8125rem] font-medium text-[#18261A]"
+                  >
                     <span
                       className="w-[5px] h-[5px] rounded-full flex-shrink-0"
                       style={{ background: '#80A689' }}
                       aria-hidden
                     />
-                    <span className="text-[0.875rem] text-[#18261A] font-medium">
-                      {b}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                    {b}
+                  </span>
+                </li>
+              ))}
+            </ul>
 
-              {/* CTA */}
-              <Link
-                href="/about"
-                className="group inline-flex items-center gap-1.5 text-[0.875rem] font-semibold
-                           text-[#18261A] hover:text-[#80A689] transition-colors duration-200"
-              >
-                {t('cta')}
-                <svg
-                  className="w-3.5 h-3.5 translate-x-0 group-hover:translate-x-0.5 transition-transform duration-200 rtl:-scale-x-100"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                  />
-                </svg>
-              </Link>
-            </div>
-          </AnimatedSection>
-
-          {/* ── Right: logo grid ── */}
-          {/*
-            No AnimatedSection wrapper — the grid itself owns the single
-            IntersectionObserver via gridRef. Cards stagger via CSS
-            animation-delay, which runs on the compositor thread.
-          */}
-          <div
-            ref={gridRef}
-            className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-2"
-          >
-            {BRANDS.map((brand, i) => (
-              <LogoCard
-                key={brand.name}
-                name={brand.name}
-                logo={brand.logo}
-                square={brand.square}
-                index={i}
-                visible={gridVisible}
-              />
-            ))}
-
-            {/* 8th decorative placeholder — only visible at xl 4-col */}
-            <div
-              className="hidden xl:flex items-center justify-center aspect-square rounded-2xl
-                         border border-dashed border-[rgba(24,38,26,0.06)]"
-              aria-hidden
+            {/* CTA */}
+            <Link
+              href="/about"
+              className="group inline-flex items-center gap-1.5 text-[0.875rem] font-semibold
+                         text-[#18261A] hover:text-[#80A689] transition-colors duration-200"
             >
-              <span className="text-[0.625rem] font-medium text-[rgba(24,38,26,0.18)] tracking-wide">
-                {tc('andMore')}
-              </span>
-            </div>
+              {t('cta')}
+              <svg
+                className="w-3.5 h-3.5 translate-x-0 group-hover:translate-x-0.5 transition-transform duration-200 rtl:-scale-x-100"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </Link>
           </div>
-
-        </div>
+        </AnimatedSection>
       </div>
+
+      {/* ── Full-bleed infinite logo marquee — hidden, revisit later ──
+      <AnimatedSection delay={0.1}>
+        <div className="relative mt-14 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+          <div className="flex w-max animate-marquee">
+            {MARQUEE_BRANDS.map((brand, i) => (
+              <LogoItem key={`${brand.name}-${i}`} brand={brand} hidden={i >= BRANDS.length} />
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+      */}
     </section>
   );
 }
